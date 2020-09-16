@@ -11,7 +11,9 @@
 </head>
 <body>
   <div class="container">
-    <header class="header row align-items-center">
+
+    <!-- header -->
+    <header class="header row align-items-center mb-3">
       <div class="col-2 d-flex justify-content-start">
           <img class="img-fluid click_this rounded" src="img/menu_button.svg" alt="Кнопка меню">
       </div>
@@ -21,11 +23,124 @@
       </a>
       <div class="w-100 border-bottom"></div>
     </header>
+    <!-- /header -->
+
+    <!-- reports_interview -->
+    <section class="reports_interview row mb-3">
+      <div class="col-6 border-right"> <!-- d-flex flex-column justify-content-center -->
+
+        <div class="mb-2">
+          <label class="mr-sm-2" for="inlineFormCustomSelect">Выбрать тип:</label>
+          <select class="custom-select" id="inlineFormCustomSelect">
+            <option selected>Choose...</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="mr-sm-2" for="inlineFormCustomSelect">Выбрать критерий:</label>
+          <select class="custom-select" id="inlineFormCustomSelect">
+            <option selected>Choose...</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+          </select>
+        </div>
+        <div class="time-period row">
+          <p class="mb-2 col-auto">Выбрать период:</p>
+          <input type="date" class="form-control form-control-sm col-3">
+          <p class="col-auto text-center">-</p>
+          <input type="date" class="form-control form-control-sm col-3">
+        </div>
+
+      </div>
+      <div class="col-6">
+
+        <div class="form-group">
+          <label for="exampleFormControlSelect2" class="lead text-warning">Избранное</label>
+          <select class="form-control mb-1" id="exampleFormControlSelect2" size="5">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+          </select>
+          <button type="button" class="btn btn-dark">Загрузить</button>
+          <button type="button" class="btn btn-danger">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- /reports_interview -->
+
+    <button type="button" class="btn btn-primary d-block mx-auto mb-5">Сформировать отчет</button>
+
+    <!-- reports -->
+    <section class="reports container border rounded">
+      <div class="reports_main row align-items-center border-bottom">
+        <span class="col-8 lead text-primary">Отчет такой-то</span>
+        <div class="reports-main_buttons col-4 d-flex justify-content-end">
+          <button type="button" class="btn btn-outline-warning mr-2">+ в избранное</button>
+          <button type="button" class="btn btn-success mr-2">Скачать отчет</button>
+          <button class="btn btn-danger"><span aria-hidden="true">&times;</span></button>
+        </div>
+      </div>
+
+      <div class="report row">
+        <div class="information col-3 border-right">
+          <div class="layers border-bottom overflow-auto">
+            <p class="lead border-bottom text-center p-2">Слои</p>
+            <ul class="list-unstyled">
+              <li class="d-flex justify-content-between border-bottom p-1">
+                <label>
+                  <input type="checkbox">
+                  Cras justo odio
+                </label>
+                <span class="click_this" aria-hidden="true">&times;</span>
+              </li>
+              <li class="d-flex justify-content-between border-bottom p-1">
+                <label>
+                  <input type="checkbox">
+                  Dapibus ac facilisis inasda sdsad fdsdd  dsd
+                </label>
+                <span class="click_this" aria-hidden="true">&times;</span>
+              </li>
+              <li class="d-flex justify-content-between border-bottom p-1">
+                <label>
+                  <input type="checkbox">
+                  Morbi leo risus
+                </label>
+                <span class="click_this" aria-hidden="true">&times;</span>
+              </li>
+            </ul>
+          </div>
+          <div class="specifications overflow-auto">
+            <p class="lead border-bottom text-center p-2">Характеристики</p>
+            <ul class="list-unstyled">
+              <li class="d-flex justify-content-between border-bottom p-1">
+                <label>Cras justo odio</label>
+              </li>
+              <li class="d-flex justify-content-between border-bottom p-1">
+                <label>Dapibus ac facilisis inasda sdsad fdsdd  dsd</label>
+              </li>
+              <li class="d-flex justify-content-between border-bottom p-1">
+                <label>Morbi leo risus</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="layout col-9">
+          
+        </div>
+      </div>
 
 
-    <button type="button" class="close" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    </section>
+    <!-- /reports -->
+
   </div>
 </body>
 </html>
