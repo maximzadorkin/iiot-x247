@@ -30,6 +30,13 @@
   height: 200px;
 }
 
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+}
+
 @media (max-width: 765px) {
   .header {
     height: 40px;
