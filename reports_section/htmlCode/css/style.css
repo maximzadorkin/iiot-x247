@@ -1,0 +1,18 @@
+.header {
+  height: 80px;
+}
+
+.click_this {
+  cursor: pointer;
+}
+
+.click_this:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 765px) {
+  .header {
+    height: 40px;
+  }
+}
+/*# sourceMappingURL=style.css.map */
