@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import menu_btn from './menu_button.svg';
 import personal from './personal-page_button.svg';
 
-export class Header extends Component {
+class Header extends Component {
 
   render() {
 
@@ -19,33 +19,35 @@ export class Header extends Component {
 
     return (
       <header 
-        className = "header row align-items-center mb-3" >
+        className="header row align-items-center mb-3" >
 
         <div 
-          className = "col-2 d-flex justify-content-start">
+          className="col-2 d-flex justify-content-start">
             <img
-              className = "img-fluid click_this rounded"
-              src = { menu_btn }
-              alt = "Кнопка меню" />
+              className="img-fluid click_this rounded"
+              src={menu_btn}
+              alt="Кнопка меню" />
         </div>
 
         <h1
-          className = { h1Classes.join(' ') } >
+          className={h1Classes.join(' ')}>
           { this.props.section }
         </h1>
 
         <a
-          href = { linkToPersonalRoom }
-          className = "col-2 d-flex justify-content-end" >
+          href={linkToPersonalRoom}
+          className="col-2 d-flex justify-content-end" >
 
           <img 
-            className = "img-fluid click_this"
-            src = { personal }
-            alt = "Перейти на персональную страницу" />
+            className="img-fluid click_this"
+            src={personal}
+            alt="Перейти на персональную страницу" />
         </a>
 
-        <div className = "w-100 border-bottom" />
+        <div className="w-100 border-bottom" />
       </header>
     );
   }
 }
+
+export default Header;

@@ -1,0 +1,21 @@
+.click_this {
+  cursor: pointer;
+}
+.click_this:hover {
+  opacity: 0.8;
+}
+
+.header {
+  height: 80px;
+}
+.icon {
+  max-width: 50px;
+}
+@media (max-width: 765px) {
+  .header {
+    height: 40px;
+  }
+  .icon {
+    max-width: 30px;
+  }
+}

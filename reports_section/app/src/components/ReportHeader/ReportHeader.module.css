@@ -1,0 +1,11 @@
+.report_main {
+  height: 70px;
+}
+.text-hidden {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.icon {
+  max-width: 25px;
+}

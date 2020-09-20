@@ -1,0 +1,6 @@
+.click_this {
+  cursor: pointer;
+}
+.click_this:hover {
+  opacity: 0.8;
+}
