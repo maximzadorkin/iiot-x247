@@ -13,8 +13,8 @@ export default (props) => (
     <form className={bootstrap['m-auto']}>
       <InterviewActive 
         isMobile={props.isMobile}
-        types={['buy', 'kek']}
-        criterions={['hey', 'lol']}/>
+        types={props.types}
+        criterions={props.criterions}/>
     </form>
   </section>
 );

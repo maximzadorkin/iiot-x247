@@ -1,0 +1,7 @@
+.click_this {
+  cursor: pointer;
+}
+.click_this:hover {
+  background-color: #0099ff; /*#17a2b8;*/
+  color: #fff;
+}

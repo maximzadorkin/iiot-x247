@@ -1,6 +1,6 @@
 import React from 'react';
-import bootstrap from '../../bootstrap.module.css';
-import classes from './ReportHeader.module.css';
+import bootstrap from '../../../bootstrap.module.css';
+import classes from './Report_Header.module.css';
 import download from './download.svg';
 
 /* 

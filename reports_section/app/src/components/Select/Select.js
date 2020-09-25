@@ -22,7 +22,7 @@ export default (props) => {
 
   return (
     <div className={bootstrap['mb-2']}>
-      <label className={bootstrap['mr-sm-2']} >{props.name}</label>
+      <label className={bootstrap['lead']} >{props.name}</label>
       <select className={bootstrap['custom-select']} >{options}</select>
     </div>
   );

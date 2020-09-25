@@ -1,6 +1,6 @@
 import React from 'react';
-import bootstrap from '../../bootstrap.module.css';
-import classes from './ReportLayers.module.css';
+import bootstrap from '../../../bootstrap.module.css';
+import classes from './Report_Layers.module.css';
 
 /*
 props
@@ -17,11 +17,11 @@ export default (props) => (
       bootstrap['p-2'],
       bootstrap['lead'],
       bootstrap['border-bottom'],
-      bootstrap['text-center'],
+      bootstrap['text-center']
     ].join(' ')}>
       Слои
     </p>
-    <ul className={bootstrap['list-unstyled']}>
+    <ul className={[bootstrap['list-unstyled'], bootstrap['mb-0']].join(' ')}>
       {
         props.layers.map((text, index) => {
           const li = [

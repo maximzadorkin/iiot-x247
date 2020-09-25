@@ -1,9 +1,9 @@
 import React from 'react';
 import bootstrap from '../../bootstrap.module.css';
 import classes from './Report.module.css';
-import ReportHeader from '../../components/ReportHeader/ReportHeader.js';
-import ReportLayers from '../../components/ReportLayers/ReportLayers.js';
-import ReportSpecifications from '../../components/ReportSpecifications/ReportSpecifications.js';
+import ReportHeader from '../../components/Report/Report_Header/Report_Header.js';
+import ReportLayers from '../../components/Report/Report_Layers/Report_Layers.js';
+import ReportSpecifications from '../../components/Report/Report_Specifications/Report_Specifications.js';
 
 /*
 props
@@ -26,57 +26,11 @@ props
     description: close report
     type: function
 */
+
 const changeCheckbox = (event) => {
   console.log(event.target.getAttribute('data-layers-key'))
 };
-const mobileReport = (props) => (
-  <React.Fragment>
-    <div className={[
-      bootstrap['w-100'],
-    ].join(' ')}>
-      <div className={[
-        classes['small-block'],
-        bootstrap['overflow-auto'],
-        bootstrap['border-bottom'],
-        bootstrap['border-secondary']
-      ].join(' ')}>
-        <ReportLayers layers={props.layers} changeCheckbox={changeCheckbox} />
-      </div>
-      <div className={[
-        classes['small-block'],
-        bootstrap['overflow-auto']
-      ].join(' ')}>
-        <ReportSpecifications specifications={props.specifications} />
-      </div>
-    </div>
-  </React.Fragment>
-);
-const desktopReport = (props) => (
-  <React.Fragment>
-    <div className={[
-      bootstrap['col-3'],
-      bootstrap['border-right'],
-      bootstrap['border-secondary'],
-      bootstrap['p-0']
-    ].join(' ')}>
-      <div className={[
-        classes['small-block'],
-        bootstrap['overflow-auto'],
-        bootstrap['border-bottom'],
-        bootstrap['border-secondary']
-      ].join(' ')}>
-        <ReportLayers layers={props.layers} changeCheckbox={changeCheckbox} />
-      </div>
-      <div className={[
-        classes['small-block'],
-        bootstrap['overflow-auto']
-      ].join(' ')}>
-        <ReportSpecifications specifications={props.specifications} />
-      </div>
-    </div>
-    <div className={bootstrap['col-9']}>{props.main}</div>
-  </React.Fragment>
-);
+
 export default (props) => {
   let groupOfSmallBlocksClasses = [
     
@@ -95,7 +49,31 @@ export default (props) => {
     ].join(' ')}>
       <ReportHeader title={props.title} isMobile={props.isMobile} closeReport={props.closeReport}/>
       <div className={bootstrap.row}>
-        { props.isMobile ? mobileReport(props) : desktopReport(props) } 
+        <div className={
+          props.isMobile ? bootstrap['w-100']
+          : [ bootstrap['col-3'],
+              bootstrap['border-right'],
+              bootstrap['border-secondary'],
+              bootstrap['p-0'] ].join(' ')
+        }>
+          <div className={[
+            classes['small-block'],
+            bootstrap['overflow-auto'],
+            bootstrap['border-bottom'],
+            bootstrap['border-secondary']
+          ].join(' ')}>
+            <ReportLayers layers={props.layers} 
+              changeCheckbox={changeCheckbox} 
+            />
+          </div>
+          <div className={[
+            classes['small-block'],
+            bootstrap['overflow-auto']
+          ].join(' ')}>
+            <ReportSpecifications specifications={props.specifications} />
+          </div>
+        </div>
+        { !props.isMobile ? <div className={bootstrap['col-9']}>{props.main}</div> : null }
       </div>
     </section>  
   );

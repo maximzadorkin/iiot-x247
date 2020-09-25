@@ -1,5 +1,5 @@
 import React from 'react';
-import bootstrap from '../../bootstrap.module.css';
+import bootstrap from '../../../bootstrap.module.css';
 
 /*
 props
@@ -17,7 +17,7 @@ export default (props) => (
     ].join(' ')}>
       Характеристики
     </p>
-    <ul className={bootstrap['list-unstyled']}>
+    <ul className={[bootstrap['list-unstyled'], bootstrap['mb-0']].join(' ')}>
       {
         props.specifications.map((text, index) => {
           const li = [bootstrap['p-2']];
