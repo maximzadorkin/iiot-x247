@@ -6,6 +6,7 @@ import StartScreen from './StartScreen/StartScreen.js';
 import FavoritesScreen from './FavoritesScreen/FavoritesScreen.js';
 import SelectScreen from './SelectScreen/SelectScreen.js';
 import SpecificationsScreen from './SpecificationsScreen/SpecificationsScreen.js';
+import SummaryScreen from './SummaryScreen/SummaryScreen.js';
 
 
 /*
@@ -173,6 +174,8 @@ class QuizActive extends React.Component {
               activeCriterians={this.state.activeCriterian}
               list={this.state.labels}
             />
+          : this.state.activeStage === 'summary_screen' ?
+            <SummaryScreen />
           : null
         }
       </div>
