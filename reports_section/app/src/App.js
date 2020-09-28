@@ -1,10 +1,10 @@
 import React from 'react';
-import Layout from './hoc/Layout.js';
+import QuizLogic from './Logic/QuizLogic.js';
 
 function App() {
   return (
     <div className="App">
-      <Layout />
+      <QuizLogic />
     </div>
   );
 }

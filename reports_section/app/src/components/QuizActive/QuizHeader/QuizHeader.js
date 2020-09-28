@@ -26,18 +26,18 @@ const nextButtonClasses = [
 export default (props) => (
   <div className={wrapperClasses}>
     {
-      props.activeStage !== 'start_screen' && 
-      props.activeStage !== 'load_screen' ?
+      props.activeStep !== 'start_screen' && 
+      props.activeStep !== 'load_screen' ?
         <div className={bootstrap['mb-3']}>
           <button 
             className={toStartButtonClasses.join(' ')}
-            onClick={props.backToStartHandle}
+            onClick={props.backToStartStep}
           >
             В начало
           </button>
           <button 
             className={backButtonClasses.join(' ')}
-            onClick={props.backButtonHandle}
+            onClick={props.backOneStep}
           >
             &#9668;
           </button>
@@ -45,12 +45,12 @@ export default (props) => (
       : null
     }
     {
-      props.activeStage !== 'start_screen' && 
-      props.activeStage !== 'summary_screen' &&
-      props.activeStage !== 'load_screen' ?
+      props.activeStep !== 'start_screen' && 
+      props.activeStep !== 'summary_screen' &&
+      props.activeStep !== 'load_screen' ?
         <div className={bootstrap['text-right']}>
           <button className={nextButtonClasses.join(' ')}
-            onClick={props.nextHandle}>
+            onClick={props.stepHandler}>
             Далее
           </button>
         </div>

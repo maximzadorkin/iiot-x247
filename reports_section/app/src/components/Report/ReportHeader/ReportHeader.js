@@ -1,6 +1,6 @@
 import React from 'react';
 import bootstrap from '../../../bootstrap.module.css';
-import classes from './Report_Header.module.css';
+import classes from './ReportHeader.module.css';
 import download from './download.svg';
 
 /* 
@@ -21,15 +21,13 @@ export default (props) => (
     classes['report_main'],
     bootstrap['row'],
     bootstrap['align-items-center'],
-    bootstrap['border-bottom'],
-    bootstrap['border-secondary']
+    bootstrap['border-bottom']
   ].join(' ')}>
       <span className={[
         bootstrap['col-6'],
         bootstrap['col-md-5'],
         bootstrap['col-xl-8'],
         bootstrap['lead'],
-        bootstrap['text-primary'],
         classes['text-hidden']
       ].join(' ')}>
         {props.title}
@@ -45,7 +43,7 @@ export default (props) => (
         <button type="button" className={[bootstrap['mr-2'], bootstrap.btn, bootstrap['btn-success']].join(' ')}>
           {props.isMobile ? <img className={classes.icon} src={download} alt='Скачать отчет' /> : 'Скачать отчет'}
         </button>
-        <button type="button" className={[bootstrap['mr-2'], bootstrap.btn, bootstrap['btn-outline-warning']].join(' ')}>
+        <button type="button" className={[bootstrap['mr-2'], bootstrap.btn, bootstrap['btn-outline-warning']].join(' ')} disabled>
           {props.isMobile ? '+' : '+ в избранное'}
         </button>
         <button className={[bootstrap.btn, bootstrap['btn-danger']].join(' ')} onClick={props.closeReport}>

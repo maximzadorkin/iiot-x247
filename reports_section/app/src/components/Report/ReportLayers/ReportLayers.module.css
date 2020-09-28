@@ -4,3 +4,6 @@
 .click_this:hover {
   opacity: 0.8;
 }
+.small-block {
+  height: 199px;
+}

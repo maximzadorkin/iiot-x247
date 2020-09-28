@@ -1,9 +1,9 @@
 import React from 'react';
 import bootstrap from '../../bootstrap.module.css';
-import classes from './Report.module.css';
-import ReportHeader from '../../components/Report/Report_Header/Report_Header.js';
-import ReportLayers from '../../components/Report/Report_Layers/Report_Layers.js';
-import ReportSpecifications from '../../components/Report/Report_Specifications/Report_Specifications.js';
+import customClasses from './Report.module.css';
+import ReportHeader from '../../components/Report/ReportHeader/ReportHeader.js';
+import ReportLayers from '../../components/Report/ReportLayers/ReportLayers.js';
+import ReportSpecifications from '../../components/Report/ReportSpecifications/ReportSpecifications.js';
 
 /*
 props
@@ -32,48 +32,50 @@ const changeCheckbox = (event) => {
 };
 
 export default (props) => {
-  let groupOfSmallBlocksClasses = [
-    
-  ];
-  if (props.isMobile) groupOfSmallBlocksClasses.unshift(bootstrap['w-100']);
-  else groupOfSmallBlocksClasses.unshift();
-
-  return (
-    <section className={[
-      classes.reports,
+  const classes = {
+    section: [
+      customClasses.reports,
       bootstrap.container,
       bootstrap['mb-2'],
       bootstrap.rounded,
       bootstrap.border,
-      bootstrap['border-secondary']
-    ].join(' ')}>
-      <ReportHeader title={props.title} isMobile={props.isMobile} closeReport={props.closeReport}/>
+      bootstrap.shadow,
+      bootstrap['bg-light'],
+    ].join(' '),
+    groupSmallBlocks:[
+      props.isMobile ? 
+        bootstrap['w-100']
+        :  
+          [
+            bootstrap['col-3'],
+            bootstrap['border-right'],
+            bootstrap['p-0']
+          ].join(' ') 
+    ].join(' ')
+  };
+
+  return (
+    <section className={classes.section}>
+      <ReportHeader 
+        title={props.report.title}
+        isMobile={props.isMobile}
+        closeReport={props.closeReport}
+      />
       <div className={bootstrap.row}>
-        <div className={
-          props.isMobile ? bootstrap['w-100']
-          : [ bootstrap['col-3'],
-              bootstrap['border-right'],
-              bootstrap['border-secondary'],
-              bootstrap['p-0'] ].join(' ')
-        }>
-          <div className={[
-            classes['small-block'],
-            bootstrap['overflow-auto'],
-            bootstrap['border-bottom'],
-            bootstrap['border-secondary']
-          ].join(' ')}>
-            <ReportLayers layers={props.layers} 
-              changeCheckbox={changeCheckbox} 
-            />
-          </div>
-          <div className={[
-            classes['small-block'],
-            bootstrap['overflow-auto']
-          ].join(' ')}>
-            <ReportSpecifications specifications={props.specifications} />
-          </div>
+        <div className={classes.groupSmallBlocks}>
+          <ReportLayers 
+            layers={props.report.layers} 
+            changeCheckbox={changeCheckbox} 
+          />
+          <ReportSpecifications specifications={props.report.specifications} />
         </div>
-        { !props.isMobile ? <div className={bootstrap['col-9']}>{props.main}</div> : null }
+        {
+          !props.isMobile ? 
+            <div className={bootstrap['col-9']}>
+              {props.main}
+            </div>
+          : null
+        }
       </div>
     </section>  
   );
