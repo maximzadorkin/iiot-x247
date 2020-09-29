@@ -36,7 +36,7 @@ class SearchSelect extends React.Component {
     }
     const idInput = `#${this.state.idInput}`;
     document.querySelector(idInput).value = value;
-    this.props.setActive(value, 'Регион'); //////////////////////////////////
+    this.props.setActive(value);
     this.props.search(value);
   }
 
@@ -71,9 +71,10 @@ class SearchSelect extends React.Component {
     };
 
     const sought = [];
-    this.props.itemsToSelect.forEach(element =>
+    this.props.getItemsToSelect().forEach(element =>
       sought.push(
-        <li className={classes.li} 
+        <li 
+          className={classes.li} 
           onClick={this.setActive}
           key={Math.floor(Math.random() * 10000)}
         >
@@ -91,7 +92,7 @@ class SearchSelect extends React.Component {
             this.props.closeButton
               ? <button 
                   className={classes.closeButton}
-                  onClick={this.props.closeButtonHandler}
+                  onClick={() => this.props.closeButtonHandler()}
                 >
                   &#9650;
                 </button>

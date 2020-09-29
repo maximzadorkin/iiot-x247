@@ -215,7 +215,7 @@ class QuizLogic extends React.Component {
         axios.get(`/0?find1=${word}`).then(response => {
           this.setState({categories: response});
         }).catch(error => {
-          this.setState({categories: ['category1', 'category2', 'category3']});
+          this.setState({categories: [`${Math.random()}`, `${Math.random()}`, `${Math.random()}`]});
         });
         break;
       case 'specifications_screen':
@@ -223,7 +223,7 @@ class QuizLogic extends React.Component {
           this.setState({foundItemsSpecs: response})
         })
         .catch(error => {
-          this.setState({foundItemsSpecs: ['a', 'b', 'c', 'd']})
+          this.setState({foundItemsSpecs: [`${Math.random()}`, `${Math.random()}`, `${Math.random()}`]})
         });
         break;
       default:

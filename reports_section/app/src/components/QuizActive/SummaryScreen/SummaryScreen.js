@@ -12,7 +12,6 @@ class SummaryScreen extends React.Component {
   }
 
   render() {
-
     return (
       <div className={bootstrap['mb-2']}>
         <div className={[bootstrap['container'], bootstrap['row']].join(' ')}>

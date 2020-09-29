@@ -19,7 +19,6 @@ export default (props) => {
       bootstrap['shadow-sm']
     ].join(' ')
   };
-
   return (
     <section className={classes.section}>
         <QuizActive

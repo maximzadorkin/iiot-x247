@@ -30,7 +30,7 @@ class QuizActive extends React.Component {
             heightFinder='350px'
             closeButton={false}
             label='Выбрать тип'
-            itemsToSelect={this.props.types}
+            getItemsToSelect={() => this.props.types}
             activeItem={this.props.activeType}
             setActive={this.props.setActiveType}
             search={this.props.search}
@@ -43,7 +43,7 @@ class QuizActive extends React.Component {
             heightFinder='350px'
             closeButton={false}
             label='Выбрать критерий'
-            itemsToSelect={this.props.categories}
+            getItemsToSelect={() => this.props.categories}
             activeItem={this.props.activeCategory}
             setActive={this.props.setActiveCategory}
             search={this.props.search}
