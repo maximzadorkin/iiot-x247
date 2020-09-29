@@ -16,9 +16,9 @@ class SearchSelect extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.search(this.props.activeItem);
-    // const idInput = `#${this.state.idInput}`;
-    // document.querySelector(idInput).value = this.props.activeItem;
+    this.props.search(this.props.activeItem);
+    const idInput = `#${this.state.idInput}`;
+    document.querySelector(idInput).value = this.props.activeItem;
   }
 
   setActive = (event) => {
@@ -42,6 +42,10 @@ class SearchSelect extends React.Component {
 
   render() {
     const styles = {
+      header: {
+        display: 'flex',
+        justifyContent: 'space-between'
+      },
       ul: {height: this.props.heightFinder}
     };
     const classes = {
@@ -55,6 +59,14 @@ class SearchSelect extends React.Component {
         bootstrap['border-bottom'],
         bootstrap['p-1'],
         customClasses.click_this
+      ].join(' '),
+      closeButton: [
+        bootstrap['btn'],
+        bootstrap['btn-light'],
+        bootstrap['text-secondary'],
+      ].join(' '),
+      input: [
+        bootstrap['form-control']
       ].join(' ')
     };
 
@@ -71,11 +83,24 @@ class SearchSelect extends React.Component {
 
     return (
       <div>
-        <strong className={bootstrap['lead']}>
-          {this.props.label}
-        </strong>
+        <div style={styles.header}>
+          <strong className={bootstrap['lead']}>
+            {this.props.label}
+          </strong>
+          {
+            this.props.closeButton
+              ? <button 
+                  className={classes.closeButton}
+                  onClick={this.props.closeButtonHandler}
+                >
+                  &#9650;
+                </button>
+              : null
+          }
+        </div>
         <input 
-          className={bootstrap['form-control']}
+          className={classes.input}
+          style={styles.input}
           type="text"
           placeholder="Поиск"
           onChange={this.setActive}

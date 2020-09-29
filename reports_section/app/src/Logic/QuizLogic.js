@@ -213,18 +213,18 @@ class QuizLogic extends React.Component {
         break;
       case 'categories_screen':
         axios.get(`/0?find1=${word}`).then(response => {
-          this.setState({types: response});
+          this.setState({categories: response});
         }).catch(error => {
-          this.setState({types: ['category1', 'category2', 'category3']});
+          this.setState({categories: ['category1', 'category2', 'category3']});
         });
         break;
       case 'specifications_screen':
-        // axios.get(`/0?find3=${word}`).then(response => { 
-          // this.setState({foundItemsSpecs: response})
-        // })
-        // .catch(error => {
+        axios.get(`/0?find3=${word}`).then(response => { 
+          this.setState({foundItemsSpecs: response})
+        })
+        .catch(error => {
           this.setState({foundItemsSpecs: ['a', 'b', 'c', 'd']})
-        // });
+        });
         break;
       default:
         break;
@@ -256,11 +256,11 @@ class QuizLogic extends React.Component {
     });
   } 
 
-  setActiveSpecifications = () => {
+  setActiveSpecifications = (values) => {
     this.setState({
       activeSpecification: {
-        labels: [],
-        actives: []
+        ...this.state.activeSpecification,
+        actives: values
       },
       timesPeriod: []
     });

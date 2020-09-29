@@ -28,22 +28,26 @@ class QuizActive extends React.Component {
         return (
           <SearchSelect
             heightFinder='350px'
+            closeButton={false}
             label='Выбрать тип'
             itemsToSelect={this.props.types}
             activeItem={this.props.activeType}
             setActive={this.props.setActiveType}
             search={this.props.search}
+            key='1000'
           />
         );
       case 'categories_screen':
         return (
           <SearchSelect
             heightFinder='350px'
+            closeButton={false}
             label='Выбрать критерий'
-            itemsToSelect={this.props.types}
+            itemsToSelect={this.props.categories}
             activeItem={this.props.activeCategory}
             setActive={this.props.setActiveCategory}
             search={this.props.search}
+            key='1001'
           />
         );
       case 'specifications_screen':
