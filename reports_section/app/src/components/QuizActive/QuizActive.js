@@ -62,7 +62,13 @@ class QuizActive extends React.Component {
       case 'times_screen':
         return <SummaryScreen openReport={this.props.openReport}/>;
       case 'summary_screen':
-        return <SummaryScreen openReport={this.props.openReport}/>;
+        return (
+          <SummaryScreen 
+            openReport={this.props.openReport}
+            setTimesPeriod={this.props.setTimesPeriod}
+            areAllFill={this.props.areAllFill}
+          />
+        );
       case 'favorites_screen':
         return (
           <FavoritesScreen

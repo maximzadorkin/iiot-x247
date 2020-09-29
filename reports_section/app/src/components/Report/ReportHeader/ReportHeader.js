@@ -40,6 +40,17 @@ export default (props) => (
         bootstrap['d-flex'],
         bootstrap['justify-content-end']
       ].join(' ')}>
+        {/* {
+          <button 
+            className={[
+              bootstrap['btn'],
+              bootstrap['btn-light'],
+            ].join(' ')}
+            onClick={props.reportToFullScreen}
+          >
+            &#8597;
+          </button>
+        } */}
         <button type="button" className={[bootstrap['mr-2'], bootstrap.btn, bootstrap['btn-success']].join(' ')}>
           {props.isMobile ? <img className={classes.icon} src={download} alt='Скачать отчет' /> : 'Скачать отчет'}
         </button>

@@ -45,6 +45,9 @@ class Layout extends React.Component {
           setActiveSpecifications={this.props.setActiveSpecifications}
           foundItemsSpecs={this.props.foundItemsSpecs}
 
+          setTimesPeriod={this.props.setTimesPeriod}
+
+          areAllFill={this.props.areAllFill}
           search={this.props.search}
         />
         {

@@ -168,7 +168,7 @@ class SpecificationsScreen extends React.Component {
                   getItemsToSelect={this.getItemsToSelect}
                   key={'1111'}
                 />
-              ) 
+              )
               : (
                 <button
                   className={this.classes.stepButton}

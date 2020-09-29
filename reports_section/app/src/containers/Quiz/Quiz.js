@@ -44,6 +44,10 @@ export default (props) => {
           setActiveSpecifications={props.setActiveSpecifications}
           foundItemsSpecs={props.foundItemsSpecs}
 
+          setTimesPeriod={props.setTimesPeriod}
+
+          
+          areAllFill={props.areAllFill}
           search={props.search}
         />
     </section>

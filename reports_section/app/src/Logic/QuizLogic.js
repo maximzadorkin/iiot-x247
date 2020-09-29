@@ -21,7 +21,8 @@ class QuizLogic extends React.Component {
       isShow: false,
       title: 'title of report',
       layers: [],
-      specifications: []
+      specifications: [],
+      content: []
     },
 
     favorites: [],
@@ -49,6 +50,8 @@ class QuizLogic extends React.Component {
     timesPeriod: [],
 
     userId: '1',
+
+    areAllFill: false,
 
     modal: {
       label: '',
@@ -112,7 +115,8 @@ class QuizLogic extends React.Component {
                 specifications: response,
                 activeSpecification: response[0]
               });
-              this.setStep('specifications_screen');
+              // this.setStep('specifications_screen');
+              this.setStep('summary_screen');
             });
         else
           this.setStep('categories_screen');
@@ -152,26 +156,37 @@ class QuizLogic extends React.Component {
     axios.post('/', {
       type: this.state.activeType,
       category: this.state.activeCategory,
-      specifications: this.state.activeSpecifications,
+      specifications: this.state.specifications,
       times: this.state.timesPeriod
     })
     .then(response => {
-      
+      this.setState({report: {
+        ...this.state.report,
+        content: response
+      }});
     }).catch(error => {
-      this.setState({labels: ['address', 'Город', 'Район', 'Улица', 'Дом']})
-      this.setStage('specifications_screen');
+      this.setState({
+        report: {
+          ...this.state.report,
+          isShow: true,
+          content: [['1', '2', '3'],['4', '5', '6'],['7', '8', '9']]//response
+        }
+      });
+      console.log(error);
+      console.log(this.state)
     });
   }
 
   addLayer() {}
 
   openReport = () => {
-    this.setState({
-      report: { 
-        ...this.state.report,
-        isShow: true,
-      }
-    });
+    this.downloadReport();
+    // this.setState({
+    //   report: { 
+    //     ...this.state.report,
+    //     isShow: true,
+    //   }
+    // });
   }
 
   closeReport = () => {
@@ -205,17 +220,15 @@ class QuizLogic extends React.Component {
         axios.get(`/0?find0=${word}`).then(response => {
           this.setState({types: response});
         }).catch(error => {
-          if (word==='type3')
-            this.setState({types: ['type4', 'type5', 'type6']});
-          else
-            this.setState({types: ['type1', 'type2', 'type3']});
+            this.setState({types: ['Заявки']});
         });
         break;
       case 'categories_screen':
         axios.get(`/0?find1=${word}`).then(response => {
           this.setState({categories: response});
         }).catch(error => {
-          this.setState({categories: [`${Math.random()}`, `${Math.random()}`, `${Math.random()}`]});
+          // this.setState({categories: [`${Math.random()}`, `${Math.random()}`, `${Math.random()}`]});
+          this.setState({categories: ['По дате']});
         });
         break;
       case 'specifications_screen':
@@ -240,8 +253,10 @@ class QuizLogic extends React.Component {
         labels: [],
         actives: []
       },
-      timesPeriod: []
+      timesPeriod: [],
+      areAllFill: false
     });
+    this.clearReport();
   }
 
   setActiveCategory = (value) => {
@@ -252,8 +267,10 @@ class QuizLogic extends React.Component {
         labels: [],
         actives: []
       },
-      timesPeriod: []
+      timesPeriod: [],
+      areAllFill: false
     });
+    this.clearReport();
   } 
 
   setActiveSpecifications = (values) => {
@@ -262,11 +279,16 @@ class QuizLogic extends React.Component {
         ...this.state.activeSpecification,
         actives: values
       },
-      timesPeriod: []
+      timesPeriod: [],
+      areAllFill: false
     });
+    this.clearReport();
   }
 
-  setTimesPeriod = () => {}
+  setTimesPeriod = (values) => {
+    this.setState({timesPeriod: values, areAllFill: true});
+    this.clearReport();
+  }
 
   closeModal = () => {
     this.setState(prevValue => (
@@ -305,6 +327,9 @@ class QuizLogic extends React.Component {
           setActiveSpecifications={this.setActiveSpecifications}
           foundItemsSpecs={this.state.foundItemsSpecs}
 
+          setTimesPeriod={this.setTimesPeriod}
+
+          areAllFill={this.state.areAllFill}
           search={this.search}
         />
         {
