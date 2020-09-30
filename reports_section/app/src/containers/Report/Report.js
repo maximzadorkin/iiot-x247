@@ -57,8 +57,9 @@ class Report extends React.Component {
     const lines = [];
     for (let i = 0; i < content.length; i += 1) {
       const line = [];
-      for (let j = 0; j < content[i].length; j += 1) {
-        const textOfCell = content[i][j];
+      const lineContent = Object.values(content[i]);
+      for (let j = 0; j < lineContent.length; j += 1) {
+        const textOfCell = lineContent[j];
         const cell = <td key={this.getRandomKey} style={styles.cell}>{textOfCell}</td>;
         line.push(cell);
       }

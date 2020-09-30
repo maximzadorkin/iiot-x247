@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../containers/Layout.js';
 import axios from 'axios';
 import ModalChoise from '../components/ModalChoise/ModalChoise.js';
+import jsonchik from '../js.json';
 
 /*
 steps [
@@ -169,11 +170,10 @@ class QuizLogic extends React.Component {
         report: {
           ...this.state.report,
           isShow: true,
-          content: [['1', '2', '3'],['4', '5', '6'],['7', '8', '9']]//response
+          content: jsonchik
         }
       });
       console.log(error);
-      console.log(this.state)
     });
   }
 
