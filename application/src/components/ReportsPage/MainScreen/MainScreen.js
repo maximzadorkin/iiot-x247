@@ -31,6 +31,17 @@ class MainScreen extends React.Component {
     ]
   }
 
+  isSomeOneActiveSearch = () => this.state.elements.reduce(
+    (acc, item) => item.activeSearch + acc, false)
+
+  arePreFilled = (beforeIndex) => this.state.elements.reduce(
+    (acc, item, index) =>
+      index < beforeIndex
+      ? acc * (item.getActiveValue() !== '')
+      : acc,
+    true
+  )
+
   openSearch = (item) => {
     this.setState({
       elements: [
@@ -52,19 +63,12 @@ class MainScreen extends React.Component {
     });
   }
 
-  getPreFilledChecks = (beforeIndex) => this.state.elements.reduce(
-    (acc, item, index) =>
-      index < beforeIndex
-      ? acc * (item.getActiveValue() !== '')
-      : acc,
-    true
-  )
-
   getSteps = () => this.state.elements.map((item, index) =>
-    !this.getPreFilledChecks(index) ? null :
+    !this.arePreFilled(index) ? null :
       item.activeSearch
       ? (
         <SearchWithSelection
+          heightSearchesUl={'200px'}
           canClose={true}
           Close={() => this.closeSearch(item)}
           title={item.title}
@@ -74,7 +78,7 @@ class MainScreen extends React.Component {
           key={Keys.getRandomKey()}
         />
       )
-      : (
+      : this.isSomeOneActiveSearch() ? null : (
         <button
           className={customClasses.openSearchBtn}
           onClick={() => this.openSearch(item)}

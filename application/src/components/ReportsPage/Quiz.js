@@ -1,6 +1,7 @@
 import React from 'react';
 import customClasses from './Quiz.module.css';
 import StartScreen from './StartScreen/StartScreen.js';
+import FavoritesScreen from './FavoritesScreen/FavoritesScreen.js';
 import MainScreen from './MainScreen/MainScreen.js';
 import Keys from '../../Functions/Keys.js';
 
@@ -14,7 +15,7 @@ class Quiz extends React.Component {
     activeType: '',
     activeCategory: '',
     activeSpecifications: [],
-    activeTimesPeriod: [],
+    activeTimePeriods: [],
     searches: ['search1', 'search2', 'search3'],
 
     report: {
@@ -28,21 +29,36 @@ class Quiz extends React.Component {
       activeType: value,
       activeCategory: '',
       activeSpecifications: '',
-      activeTimesPeriod: []
+      activeTimePeriods: []
     });
   }
-  setActiveCategory = (value) => this.setState({activeCategory: value});
-  setActiveSpecification = (value) => this.setState({activeSpecifications: value});
-  getActiveType = () => this.state.activeType;
-  getActiveCategory = () => this.state.activeCategory;
-  getActiveSpecification = () => this.state.activeSpecifications;
+  setActiveCategory = (value) => this.setState({activeCategory: value})
+  setActiveSpecification = (value) => this.setState({activeSpecifications: value})
+  setActiveTimePeriods = (value) => this.setState({activeTimePeriods: value})
+  getActiveType = () => this.state.activeType
+  getActiveCategory = () => this.state.activeCategory
+  getActiveSpecification = () => this.state.activeSpecifications
   getSearches = (value) => {
-    return [Keys.getRandomKey(), Keys.getRandomKey()];
+    return [
+      'dasd pouoi sdf ijo',
+      Keys.getRandomKey(),
+      Keys.getRandomKey(),
+      Keys.getRandomKey(),
+      Keys.getRandomKey(),
+      Keys.getRandomKey(),
+      Keys.getRandomKey(),
+      Keys.getRandomKey(),
+      Keys.getRandomKey()
+    ];
     // this.state.searches;
   }
 
   changeScreen = (newScreen) => {
-    this.setState({activeScreen: 'load_screen'});
+    this.setState(prevValue => ({
+      activeScreen: 'load_screen',
+      screensSequence: prevValue.screensSequence
+        .concat(prevValue.activeScreen)
+    }));
 
     this.setState({activeScreen: newScreen});
   }
@@ -52,6 +68,18 @@ class Quiz extends React.Component {
     switch (screen) {
       case 'start_screen':
         nextScreen = <StartScreen changeScreen={this.changeScreen}/>
+        break;
+      case 'favorites_screen':
+        nextScreen = (
+          <FavoritesScreen
+            setActiveType={this.setActiveType}
+            setActiveCategory={this.setActiveCategory}
+            setActiveSpecification={this.setActiveSpecification}
+            setActiveTimePeriods={this.setActiveTimePeriods}
+            btnToStartHandle={this.btnToStartHandle}
+            changeScreen={this.changeScreen}
+          />
+        )
         break;
       case 'main_screen':
         nextScreen = (
@@ -79,9 +107,13 @@ class Quiz extends React.Component {
     return nextScreen;
   }
 
-  btnToStartHandle = () => {}
+  btnToStartHandle = () =>
+    this.setState({activeScreen: 'start_screen'});
 
-  btnBackHandle = () => {}
+
+  btnBackHandle = () =>
+    this.setState({activeScreen: this.state.screensSequence.pop()});
+
 
   btnNextHandle = () => {}
 

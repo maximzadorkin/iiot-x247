@@ -2,11 +2,14 @@ import React from 'react';
 import Keys from '../../Functions/Keys.js';
 import customClasses from './SearchWithSelection.module.css';
 
-// canClose
-// Close
-// setActiveValue
-// getActiveValue
-// getSearches
+// heightSearchesUl={'250px'}
+// canClose={true}
+// Close={() => this.closeSearch(item)}
+// title={item.title}
+// setActiveValue={item.setActiveValue}
+// getActiveValue={item.getActiveValue}
+// getSearches={item.getSearches}
+// key={Keys.getRandomKey()}
 class SearchWithSelection extends React.Component {
 
   changeValueHandle = (value) =>
@@ -55,7 +58,7 @@ class SearchWithSelection extends React.Component {
 
         <ul
           className={customClasses.searchUl}
-          style={{height: '250px'}}
+          style={{height: this.props.heightSearchesUl}}
         >
           {this.getActiveSearches()}
         </ul>
