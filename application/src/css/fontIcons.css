@@ -1,0 +1,19 @@
+@font-face{
+
+  font-family: 'ElegantIcons';
+  
+  src: url('./fonts/ElegantIcons.eot');
+  
+  src: url('./fonts/ElegantIcons.eot?iefix') format('eot'),
+  
+  url('./fonts/ElegantIcons.woff') format('woff'),
+  
+  url('./fonts/ElegantIcons.ttf') format('truetype'),
+  
+  url('./fonts/ElegantIcons.svg#webfont') format('svg');
+  
+  font-weight: normal;
+  
+  font-style: normal;
+  
+  }
