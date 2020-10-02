@@ -16,14 +16,14 @@ class MainScreen extends React.Component {
     elements: [
       {
         title: 'Выбрать тип',
-        activeSearch: false,
+        isSearch: false,
         getActiveValue: this.props.getActiveType,
         setActiveValue: this.props.setActiveType,
         getSearches: this.props.getSearches
       },
       {
         title: 'Выбрать категорию',
-        activeSearch: false,
+        isSearch: false,
         getActiveValue: this.props.getActiveCategory,
         setActiveValue: this.props.setActiveCategory,
         getSearches: this.props.getSearches
@@ -32,7 +32,7 @@ class MainScreen extends React.Component {
   }
 
   isSomeOneActiveSearch = () => this.state.elements.reduce(
-    (acc, item) => item.activeSearch + acc, false)
+    (acc, item) => item.isSearch + acc, false)
 
   arePreFilled = (beforeIndex) => this.state.elements.reduce(
     (acc, item, index) =>
@@ -48,8 +48,8 @@ class MainScreen extends React.Component {
         ...this.state.elements
           .map(el =>
             el.title === item.title
-            ? {...el, activeSearch: true}
-            : {...el, activeSearch: false})
+            ? {...el, isSearch: true}
+            : {...el, isSearch: false})
       ]
     });
   }
@@ -58,14 +58,14 @@ class MainScreen extends React.Component {
     this.setState({
       elements: [
         ...this.state.elements
-          .map(el => el.title === item.title ? {...el, activeSearch: false} : el)
+          .map(el => ({...el, isSearch: false}))
       ]
     });
   }
 
   getSteps = () => this.state.elements.map((item, index) =>
     !this.arePreFilled(index) ? null :
-      item.activeSearch
+      item.isSearch
       ? (
         <SearchWithSelection
           heightSearchesUl={'200px'}
@@ -74,7 +74,7 @@ class MainScreen extends React.Component {
           title={item.title}
           setActiveValue={item.setActiveValue}
           getActiveValue={item.getActiveValue}
-          getSearches={item.getSearches}
+          getSearches={() => item.getSearches(item.getActiveValue())}
           key={Keys.getRandomKey()}
         />
       )

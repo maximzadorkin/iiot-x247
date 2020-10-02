@@ -15,13 +15,15 @@ class Quiz extends React.Component {
 
     activeType: '',
     activeCategory: '',
-    activeSpecifications: [],
     activeTimePeriods: [],
     searches: ['search1', 'search2', 'search3'],
 
     specification: {
-      labelsArr: [['Выбрать область', 'Выбрать город', 'Выбрать микрорайон', 'Выбрать улицу', 'Выбрать дом'], ['Выбрать компанию', 'Выбрать чтото еще', 'Выбрать еще чтото']],
-      activeIndex: 0
+      activeIndex: 0,
+      content: [
+        {labels: ['Выбрать область', 'Выбрать город', 'Выбрать микрорайон'], items: []},
+        {labels: ['Выбрать компанию', 'Выбрать чтото еще',], items: []}
+      ]
     },
 
     report: {
@@ -30,29 +32,39 @@ class Quiz extends React.Component {
     }
   }
 
-  setActiveType = (value) => {
-    this.setState({
+  setActiveType = (value) => this.setState(prevValue => ({
+    ...prevValue,
       activeType: value,
       activeCategory: '',
-      activeSpecifications: '',
+      specification: {activeIndex: 0, content: []},
       activeTimePeriods: []
-    });
-  }
-  setActiveCategory = (value) => this.setState({activeCategory: value})
-  setSpecification = (value) => {
-      this.setState(prevValue => ({
-      ...prevValue,
-      activeSpecifications: [...prevValue.activeSpecifications, value],
-      specification: {
-        ...prevValue.specification,
-        activeIndex: prevValue.specification.activeIndex + 1 
-      }
     }))
+  setActiveCategory = (value) => this.setState(prevValue => ({
+    ...prevValue,
+    activeCategory: value,
+    specification: {activeIndex: 0, content: []},
+    activeTimePeriods: []
+  }))
+  setSpecificationItems = (value) => {
+    this.setState(prevValue => ({
+    ...prevValue,
+    specification: {
+      ...prevValue.specification,
+      content: this.state.specification.content.map((el, index) =>
+        index === this.state.specification.activeIndex
+        ? {labels: el.labels, items: value}
+        : el
+      )
+    }
+  }))
+  console.log(this.state)
   }
   setActiveTimePeriods = (value) => this.setState({activeTimePeriods: value})
+
   getActiveType = () => this.state.activeType
   getActiveCategory = () => this.state.activeCategory
-  getActiveSpecification = () => this.state.activeSpecifications
+  getSpecificationLabels = () => this.state.specification.content[this.state.specification.activeIndex].labels
+  getSpecificationItems = () => this.state.specification.content[this.state.specification.activeIndex].items
   getSearches = (value) => {
     return [
       'dasd pouoi sdf ijo',
@@ -80,7 +92,7 @@ class Quiz extends React.Component {
           canChange = false;
         break;
       case 'specification_screen':
-        if (this.state.activeSpecifications[this.state.specification.activeIndex] === [])
+        if (this.state.specification.content[this.state.specification.activeIndex] === [])
           canChange = false;
         break;
       default:
@@ -89,6 +101,7 @@ class Quiz extends React.Component {
 
     if (canChange)
       this.setState(prevValue => ({
+        ...prevValue,
         activeScreen: newScreen,
         screensSequence: [...prevValue.screensSequence, activeScreen]
       }));
@@ -134,8 +147,10 @@ class Quiz extends React.Component {
             btnToStartHandle={this.btnToStartHandle}
             btnBackHandle={this.btnBackHandle}
             btnNextHandle={this.changeScreen}
-            setSpecification={this.setSpecification}
-            labels={this.state.specification.labelsArr[this.state.specification.activeIndex]}
+            getLabels={this.getSpecificationLabels}
+            getItems={this.getSpecificationItems}
+            setSpecification={this.setSpecificationItems}
+            getSearches={this.getSearches}
           />
         );
         break;
@@ -149,20 +164,15 @@ class Quiz extends React.Component {
     return nextScreen;
   }
 
-  btnToStartHandle = () =>
-    this.setState({
+  btnToStartHandle = () => this.setState(prevValue => ({
+      ...prevValue,
       activeScreen: 'start_screen',
       screensSequence: []
-    });
+    }));
 
 
   btnBackHandle = () =>
     this.setState({activeScreen: this.state.screensSequence.pop()});
-
-
-  btnNextHandle = () => {
-
-  }
 
   render() {
     return (
