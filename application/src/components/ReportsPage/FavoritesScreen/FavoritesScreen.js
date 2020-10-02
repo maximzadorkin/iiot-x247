@@ -1,5 +1,6 @@
 import React from 'react';
 // import axios from 'axios';
+import Keys from '../../../Functions/Keys.js';
 import customClasses from './FavoritesScreen.module.css';
 
 class FavoritesScreen extends React.Component {
@@ -35,6 +36,7 @@ class FavoritesScreen extends React.Component {
   }
   getFavorite = () => this.state.activeFavorite
 
+  // запросить параметры
   getSearches = () => [
     'd sa',
     ' zxcfv j',
@@ -67,6 +69,7 @@ class FavoritesScreen extends React.Component {
                     ? `${customClasses.favoritesLi} ${customClasses.active}`
                     : customClasses.favoritesLi}
                   onClick={this.setFavorite}
+                  key={Keys.getRandomKey()}
                 >
                   {item.title}
                 </li>

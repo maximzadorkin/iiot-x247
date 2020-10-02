@@ -18,7 +18,7 @@ export default (props) => (
       </button>
     </div>
     <button
-      className={`${customClasses.btn} ${customClasses.green}`}
+      className={`${customClasses.btn}`}
       onClick={props.btnNextHandle}
     >
       &#x35;

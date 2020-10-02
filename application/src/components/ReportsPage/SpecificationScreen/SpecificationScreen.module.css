@@ -1,0 +1,25 @@
+.screen {
+  height: 100%;
+  width: 100%;
+}
+.mainBlock {
+  max-height: 320px;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.specificationBlock {
+  border-left: 1px solid #ced4da;
+}
+.openSearchBtn {
+  margin-bottom: 15px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  color: #007bff;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: left;
+}

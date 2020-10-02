@@ -3,6 +3,7 @@ import customClasses from './Quiz.module.css';
 import StartScreen from './StartScreen/StartScreen.js';
 import FavoritesScreen from './FavoritesScreen/FavoritesScreen.js';
 import MainScreen from './MainScreen/MainScreen.js';
+import SpecificationScreen from './SpecificationScreen/SpecificationScreen.js';
 import Keys from '../../Functions/Keys.js';
 
 class Quiz extends React.Component {
@@ -17,6 +18,11 @@ class Quiz extends React.Component {
     activeSpecifications: [],
     activeTimePeriods: [],
     searches: ['search1', 'search2', 'search3'],
+
+    specification: {
+      labelsArr: [['Выбрать область', 'Выбрать город', 'Выбрать микрорайон', 'Выбрать улицу', 'Выбрать дом'], ['Выбрать компанию', 'Выбрать чтото еще', 'Выбрать еще чтото']],
+      activeIndex: 0
+    },
 
     report: {
       title: '',
@@ -33,7 +39,16 @@ class Quiz extends React.Component {
     });
   }
   setActiveCategory = (value) => this.setState({activeCategory: value})
-  setActiveSpecification = (value) => this.setState({activeSpecifications: value})
+  setSpecification = (value) => {
+      this.setState(prevValue => ({
+      ...prevValue,
+      activeSpecifications: [...prevValue.activeSpecifications, value],
+      specification: {
+        ...prevValue.specification,
+        activeIndex: prevValue.specification.activeIndex + 1 
+      }
+    }))
+  }
   setActiveTimePeriods = (value) => this.setState({activeTimePeriods: value})
   getActiveType = () => this.state.activeType
   getActiveCategory = () => this.state.activeCategory
@@ -54,13 +69,31 @@ class Quiz extends React.Component {
   }
 
   changeScreen = (newScreen) => {
-    this.setState(prevValue => ({
-      activeScreen: 'load_screen',
-      screensSequence: prevValue.screensSequence
-        .concat(prevValue.activeScreen)
-    }));
+    const activeScreen = this.state.activeScreen;
+    let canChange = true;
 
-    this.setState({activeScreen: newScreen});
+    this.setState({activeScreen: 'load_screen'});
+
+    switch (activeScreen) {
+      case 'main_screen':
+        if (this.state.activeCategory === '')
+          canChange = false;
+        break;
+      case 'specification_screen':
+        if (this.state.activeSpecifications[this.state.specification.activeIndex] === [])
+          canChange = false;
+        break;
+      default:
+        canChange = true;
+    }
+
+    if (canChange)
+      this.setState(prevValue => ({
+        activeScreen: newScreen,
+        screensSequence: [...prevValue.screensSequence, activeScreen]
+      }));
+    else
+      this.setState({activeScreen: activeScreen});
   }
 
   returnScreen = (screen) => {
@@ -86,7 +119,7 @@ class Quiz extends React.Component {
           <MainScreen
             btnToStartHandle={this.btnToStartHandle}
             btnBackHandle={this.btnBackHandle}
-            btnNextHandle={this.btnNextHandle}
+            btnNextHandle={this.changeScreen}
             setActiveType={this.setActiveType}
             getActiveType={this.getActiveType}
             setActiveCategory={this.setActiveCategory}
@@ -96,6 +129,15 @@ class Quiz extends React.Component {
         );
         break;
       case 'specification_screen':
+        nextScreen = (
+          <SpecificationScreen 
+            btnToStartHandle={this.btnToStartHandle}
+            btnBackHandle={this.btnBackHandle}
+            btnNextHandle={this.changeScreen}
+            setSpecification={this.setSpecification}
+            labels={this.state.specification.labelsArr[this.state.specification.activeIndex]}
+          />
+        );
         break;
       case 'finish_screen':
         break;
@@ -108,14 +150,19 @@ class Quiz extends React.Component {
   }
 
   btnToStartHandle = () =>
-    this.setState({activeScreen: 'start_screen'});
+    this.setState({
+      activeScreen: 'start_screen',
+      screensSequence: []
+    });
 
 
   btnBackHandle = () =>
     this.setState({activeScreen: this.state.screensSequence.pop()});
 
 
-  btnNextHandle = () => {}
+  btnNextHandle = () => {
+
+  }
 
   render() {
     return (

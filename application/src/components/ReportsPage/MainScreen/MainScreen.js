@@ -95,7 +95,7 @@ class MainScreen extends React.Component {
         <QuizHeader
           btnToStartHandle={this.props.btnToStartHandle}
           btnBackHandle={this.props.btnBackHandle}
-          btnNextHandle={this.props.btnNextHandle}
+          btnNextHandle={() => this.props.btnNextHandle('specification_screen')}
         />
         <div className={customClasses.mainBlock}>
           {this.getSteps()}
