@@ -7,11 +7,7 @@ import customClasses from './SpecificationScreen.module.css';
 class SpecificationScreen extends React.Component {
 
   state = {
-    steps: this.props.getLabels().map(item => ({
-      isSearch: false,
-      title: item,
-      item: ''
-    }))
+    steps: []
   }
 
   componentDidMount = () => {
@@ -126,7 +122,7 @@ class SpecificationScreen extends React.Component {
             {/* {} проверка, что все заполнены. если заполнены - кнопка добавления */}
             <ul className={customClasses.itemsUl}>
                 {
-                  this.props.getItems().map(item =>
+                  this.props.items.map(item =>
                   <li className={customClasses.itemLi}>
                     {item}
                     <button

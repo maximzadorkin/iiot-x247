@@ -36,13 +36,13 @@ class Quiz extends React.Component {
     ...prevValue,
       activeType: value,
       activeCategory: '',
-      specification: {activeIndex: 0, content: []},
+      // specification: {activeIndex: 0, content: []},
       activeTimePeriods: []
     }))
   setActiveCategory = (value) => this.setState(prevValue => ({
     ...prevValue,
     activeCategory: value,
-    specification: {activeIndex: 0, content: []},
+    // specification: {activeIndex: 0, content: []},
     activeTimePeriods: []
   }))
   setSpecificationItems = (value) => {
@@ -149,6 +149,7 @@ class Quiz extends React.Component {
             btnNextHandle={this.changeScreen}
             getLabels={this.getSpecificationLabels}
             getItems={this.getSpecificationItems}
+            items={this.state.specification.content[this.state.specification.activeIndex].items}
             setSpecification={this.setSpecificationItems}
             getSearches={this.getSearches}
           />
