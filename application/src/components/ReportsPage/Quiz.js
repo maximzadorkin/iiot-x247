@@ -1,5 +1,6 @@
 import React from 'react';
 import customClasses from './Quiz.module.css';
+import axios from 'axios';
 import StartScreen from './StartScreen/StartScreen.js';
 import FavoritesScreen from './FavoritesScreen/FavoritesScreen.js';
 import MainScreen from './MainScreen/MainScreen.js';
@@ -47,14 +48,14 @@ class Quiz extends React.Component {
 
   setActiveType = (value) => this.setState(prevValue => ({
     ...prevValue,
-      activeType: value.trim(),
+      activeType: value,
       activeCategory: '',
       // specification: {activeIndex: 0, content: []},
       activeTimePeriods: []
     }))
   setActiveCategory = (value) => this.setState(prevValue => ({
     ...prevValue,
-    activeCategory: value.trim(),
+    activeCategory: value,
     // specification: {activeIndex: 0, content: []},
     activeTimePeriods: []
   }))
@@ -78,34 +79,31 @@ class Quiz extends React.Component {
   getSpecificationLabels = () => this.state.specification.content[this.state.specification.activeIndex].labels
   getSpecificationItems = () => this.state.specification.content[this.state.specification.activeIndex].items
   getActiveDatePeriod = () => this.state.activeTimePeriod
-  getSearches = (value) => {
-    switch (this.state.activeScreen) {
-      case 'main_screen': 
+  getSearches = () => this.state.searches
+
+  search = (value, sought) => {
+    console.log(value)
+    switch (sought) {
+      case 'types':
+        axios.get(`https://localhost:5001/api/EDSChart/?type=${value}`)
+        .then(response => {
+          console.log(response)
+          this.setState({searches: response})
+        });
         break;
-      case 'specification_screen':
+      case 'categories':
+        axios.get(`https://localhost:5001/api/EDSChart/?type=${this.state.activeType}&category=${value}&method=1`)
+        .then(response => {
+          console.log(response)
+          this.setState({searches: response})
+        });
         break;
-      case 'times_screen':
+      // case 'times_screen':
         // axios.
-        break;
+        // break;
       default:
         break;
     }
-    return [
-      'dasd pouoi sdf ijo',
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey(),
-      Keys.getRandomKey()
-    ];
-    // this.state.searches;
   }
 
   changeScreen = (newScreen) => {
@@ -135,6 +133,17 @@ class Quiz extends React.Component {
         break;
       case 'times_screen':
         canChange = Boolean(this.state.activeTimePeriod.from && this.state.activeTimePeriod.to);
+        axios.post('https://localhost:5001/api/EDSChart/', {
+          type: this.state.activeType,
+          category: this.state.activeCategory,
+          from: this.state.activeTimePeriod.from,
+          to: this.state.activeTimePeriod.to
+        }).then(response => this.setState({
+          report: {
+            ...this.state.report,
+            content: response
+          }
+        }));
         break;
       default:
         canChange = true;
@@ -164,6 +173,8 @@ class Quiz extends React.Component {
             setActiveTimePeriods={this.setActiveTimePeriods}
             btnToStartHandle={this.btnToStartHandle}
             changeScreen={this.changeScreen}
+            search={this.search}
+            getSearches={this.getSearches}
           />
         )
         break;
@@ -178,6 +189,7 @@ class Quiz extends React.Component {
             setActiveCategory={this.setActiveCategory}
             getActiveCategory={this.getActiveCategory}
             getSearches={this.getSearches}
+            search={this.search}
           />
         );
         break;
@@ -192,6 +204,7 @@ class Quiz extends React.Component {
             items={this.state.specification.content[this.state.specification.activeIndex].items}
             setSpecification={this.setSpecificationItems}
             getSearches={this.getSearches}
+            search={this.search}
           />
         );
         break;

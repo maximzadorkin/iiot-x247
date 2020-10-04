@@ -12,8 +12,9 @@ import customClasses from './SearchWithSelection.module.css';
 // key={Keys.getRandomKey()}
 class SearchWithSelection extends React.Component {
 
-  changeValueHandle = (value) =>
+  changeValueHandle = (value) => {
     this.props.setActiveValue(value);
+  }
 
   getCloseButton = () => (
     this.props.canClose

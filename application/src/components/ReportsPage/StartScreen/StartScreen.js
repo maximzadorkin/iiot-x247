@@ -12,6 +12,7 @@ export default (props) => (
     <button
       className={`${customClasses.btn} ${customClasses.yellow} ${customClasses.click}`}
       onClick={() => props.changeScreen('favorites_screen')}
+      disabled
     >
       Избранное
     </button>
