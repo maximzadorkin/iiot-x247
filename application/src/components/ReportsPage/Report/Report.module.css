@@ -28,13 +28,11 @@
   height: 320px;
   width: 100%;
   overflow: auto;
-
 }
 .cell {
   width: 100px;
   text-align: left;
   vertical-align: middle;
-  display: inline-block;
   padding: 5px 5px 0px 5px;
   border: 1px solid #dee2e6;
   border-radius: 1px;
