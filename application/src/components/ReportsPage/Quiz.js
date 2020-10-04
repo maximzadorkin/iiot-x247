@@ -71,7 +71,6 @@ class Quiz extends React.Component {
   getSearches = () => this.state.searches
 
   search = (value, sought) => {
-    console.log(value)
     switch (sought) {
       case 'types':
         axios.get(`https://localhost:5001/api/EDSChart/?type=${value}`)
@@ -100,6 +99,7 @@ class Quiz extends React.Component {
     let canChange = true;
 
     this.setState({activeScreen: 'load_screen'});
+    this.setState(prevValue => ({activeScreen: 'load_screen'}));
 
     switch (activeScreen) {
       case 'main_screen':
@@ -140,7 +140,6 @@ class Quiz extends React.Component {
               screensSequence: [...prevValue.screensSequence, activeScreen]
             }))
           }
-
         });
         break;
       default:
