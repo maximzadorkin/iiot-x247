@@ -99,7 +99,6 @@ class Quiz extends React.Component {
     let canChange = true;
 
     this.setState({activeScreen: 'load_screen'});
-    this.setState(prevValue => ({activeScreen: 'load_screen'}));
 
     switch (activeScreen) {
       case 'main_screen':
@@ -226,6 +225,9 @@ class Quiz extends React.Component {
           />
         );
         break;
+      case 'load_screen':
+        const load = <p className={customClasses.load}>&#xe02d;</p>;
+        nextScreen = load;
       default:
         const load = <p className={customClasses.load}>&#xe02d;</p>;
         nextScreen = load;
