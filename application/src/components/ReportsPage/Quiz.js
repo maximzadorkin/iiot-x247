@@ -229,8 +229,8 @@ class Quiz extends React.Component {
         const load = <p className={customClasses.load}>&#xe02d;</p>;
         nextScreen = load;
       default:
-        const load = <p className={customClasses.load}>&#xe02d;</p>;
-        nextScreen = load;
+        const loadS = <p className={customClasses.load}>&#xe02d;</p>;
+        nextScreen = loadS;
         break;
     }
     return nextScreen;
