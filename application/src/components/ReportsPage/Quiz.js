@@ -31,18 +31,7 @@ class Quiz extends React.Component {
 
     report: {
       title: '',
-      content: [
-        ['1 dsdsqd sdsd ','2 adsds dsd dsd ','4 dszad dsad ds d32', 'sd sdsqwad d sd f', 's dsadqws dsd sf', 'bgrq dv ch 5', 'sdgff ', 'qt4j 3', 'qt fhdbrg43', 'qtzvd 43', 'hjzfdv ew'],
-        ['1 dsdsswd sdsd ','2 sdsds dsd dsd ','4 dsxad dsad ds d32', 'sd sdsaasd d sd f', 's dsadswe dsd sf', 'bg dfsadv ch 5', 'szxdf ', 'qytt4 3', 'qtfbg 43', 'qtfdzv 43', 'hjarghe ew'],
-        ['1 dsdcsde sdsd ','2 ddsds dsd dsd ','4 dsacd dsad ds d32', 'sd sdsad zxd sd f', 's dsads dersd sf', 'xcbg dv ch 5', 's vcf ', 'qt4yt 3', 'qt fbg43', 'qt zfdv43', 'hjsjrhyt ew'],
-        ['1 dsdzsd rsdsd ','2 dsfds dsd dsd ','4 dsadv dsad ds d32', 'sd sdsad d ersd f', 's dsads dsdrt sf', 'bxcvg dv ch 5', 'scvdf ', 'qsrt4 3', 'qtdz 43', 'qt fdzv43', 'hj ahetew'],
-        ['1 dsdxsd stdsd ','2 dsdgs dsd dsd ','4 dsad bdsad ds d32', 'sd sdsad d sddf f', 'ssd dsads dsd sf', 'bg fghdv ch 5', 'ssadf ', 'qthbg4 3', 'qfbxgt 43', 'qt zdfvs43', 'hjhfesdart ew'],
-        ['1 dsdsd sdsyd ','2 dsds hdsd dsd ','4 dsad dsnad ds d32', 'sd sfgdsad d sd f', 's dsxcads dsd sf', 'bg dv czxch 5', 'sdhjf ', 'qtdbh4 3', 'qtfbvxg 43', 'qtfbxgd 43', 'hj fdszehbgew'],
-        ['1 dsdsd sdsdu ','2 dsds djsd dsd ','4 dsad dsamd ds d32', 'sd sdscvad d sd f', 's dsadcvs dsd sf', 'bg tyujdv ch 5', 'sadf ', 'qtdbrxgtf4 3', 'qfgt 43', 'qtfhbghb 43', 'hzdfgbhsj ew'],
-        ['1 dsdsd sdsd i','2 dsds dskd dsd ','4 dsad dsad, ds d32', 'sd sdsadvb d sd f', 's dsads ggdsd sf', 'bg dv ch 5', 'sdiuf ', 'qtfdrtg4 3', 'qt 4fbvxgg3', 'qt f43', 'hj sedrgew'],
-        ['1 dsdsd sdsd u','2 dsds dsdl dsd ','4 dsad dsad .ds d32', 'sd sdsad dbn sd f', 's dsads dsbnd sf', 'bg dvfgh ch 5', 'sxcdf ', 'qtfdrtgsx4 3', 'qtfbxgc 43', 'qtfbgcgb 43', 'hjesarg ew'],
-        ['1 dsdsd sdsd i','2 dsds dsd ;dsd ','4 dsad dsad d/s d32', 'sd sdsad d sghd f', 's dsads dsdjh sf', 'bg dv cfghh 5', 'sdnf ', 'qtfgb4 3', 'qt fhnbxg43', 'qt fdg43', 'haehrj ew'],
-      ]
+      content: []
     }
   }
 
@@ -138,17 +127,26 @@ class Quiz extends React.Component {
           category: this.state.activeCategory,
           from: this.state.activeTimePeriod.from,
           to: this.state.activeTimePeriod.to
-        }).then(response => this.setState({
-          report: {
-            ...this.state.report,
-            content: response.data
+        }).then(response => {
+          if (canChange) {
+            this.setState(prevValue => ({
+              ...prevValue,
+              report: {
+                ...this.state.report,
+                content: response.data
+              },
+              searches: [],
+              activeScreen: newScreen,
+              screensSequence: [...prevValue.screensSequence, activeScreen]
+            }))
           }
-        }));
+
+        });
         break;
       default:
         canChange = true;
     }
-    if (canChange)
+    if (canChange && activeScreen !== 'times_screen')
       this.setState(prevValue => ({
         ...prevValue,
         searches: [],

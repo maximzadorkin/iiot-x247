@@ -17,6 +17,8 @@ class SearchWithSelection extends React.Component {
     this.props.search();
   }
 
+  componentDidMount =() => this.props.search();
+
   getCloseButton = () => (
     this.props.canClose
     ?
