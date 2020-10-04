@@ -19,16 +19,16 @@ class MainScreen extends React.Component {
         isSearch: false,
         getActiveValue: this.props.getActiveType,
         setActiveValue: this.props.setActiveType,
-        getSearches: () => this.props.getSearches(),
-        search: () => this.props.search(this.props.getActiveType(), 'types')
+        getSearches: this.props.getSearches,
+        search: this.props.search(this.props.getActiveType(), 'types')
       },
       {
         title: 'Выбрать категорию',
         isSearch: false,
         getActiveValue: this.props.getActiveCategory,
         setActiveValue: this.props.setActiveCategory,
-        getSearches: () => this.props.getSearches(),
-        search: () => this.props.search(this.props.getActiveType(), 'categories')
+        getSearches: this.props.getSearches,
+        search: () => this.props.search(this.props.getActiveCategory(), 'categories')
       }
     ]
   }
@@ -76,7 +76,8 @@ class MainScreen extends React.Component {
           title={item.title}
           setActiveValue={item.setActiveValue}
           getActiveValue={item.getActiveValue}
-          getSearches={() => item.getSearches()}
+          getSearches={item.getSearches}
+          search={item.search}
           key={Keys.getRandomKey()}
         />
       )

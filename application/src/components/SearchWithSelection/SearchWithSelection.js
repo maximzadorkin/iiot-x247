@@ -14,6 +14,7 @@ class SearchWithSelection extends React.Component {
 
   changeValueHandle = (value) => {
     this.props.setActiveValue(value);
+    this.props.search();
   }
 
   getCloseButton = () => (

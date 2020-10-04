@@ -88,14 +88,14 @@ class Quiz extends React.Component {
         axios.get(`https://localhost:5001/api/EDSChart/?type=${value}`)
         .then(response => {
           console.log(response)
-          this.setState({searches: response})
+          this.setState({searches: response.data})
         });
         break;
       case 'categories':
         axios.get(`https://localhost:5001/api/EDSChart/?type=${this.state.activeType}&category=${value}&method=1`)
         .then(response => {
           console.log(response)
-          this.setState({searches: response})
+          this.setState({searches: response.data})
         });
         break;
       // case 'times_screen':
@@ -141,7 +141,7 @@ class Quiz extends React.Component {
         }).then(response => this.setState({
           report: {
             ...this.state.report,
-            content: response
+            content: response.data
           }
         }));
         break;
