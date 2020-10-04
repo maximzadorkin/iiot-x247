@@ -151,6 +151,7 @@ class Quiz extends React.Component {
     if (canChange)
       this.setState(prevValue => ({
         ...prevValue,
+        searches: [],
         activeScreen: newScreen,
         screensSequence: [...prevValue.screensSequence, activeScreen]
       }));
@@ -173,8 +174,8 @@ class Quiz extends React.Component {
             setActiveTimePeriods={this.setActiveTimePeriods}
             btnToStartHandle={this.btnToStartHandle}
             changeScreen={this.changeScreen}
-            search={this.search}
             getSearches={this.getSearches}
+            search={this.search}
           />
         )
         break;
