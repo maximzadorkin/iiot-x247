@@ -1,0 +1,44 @@
+.screen {
+  height: 100%;
+  width: 100%;
+}
+.newPeriod {
+  width: 320px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.icon {
+  font-family: 'ElegantIcons';
+}
+.dateInput {
+  width: 135px;
+  padding: 5px;
+  outline: none;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  color: #343a40;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-weight: 300;
+  font-size: 15px;
+}
+.dateInput:hover {
+  box-shadow: 0px 0px 0px 2px #ced4da inset;
+}
+.btn {
+  margin-left: 5px;
+  padding: 5px;
+  font-size: 20px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  transition: 0.2s;
+  color: #6c757d;
+}
+.btn:hover {
+  cursor: pointer;
+  opacity: 0.9;
+  box-shadow: inset 0.5px 1px 1px #ced4da;
+}

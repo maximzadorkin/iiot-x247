@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   width: 1140px;
-  height: 400px;
+  height: 470px;
   padding: 20px;
   margin: 25px auto 25px;
   border: 1px solid #ced4da;
@@ -36,7 +36,7 @@
 .click:hover {
   cursor: pointer;
   opacity: 0.9;
-  box-shadow:  1px 1px 2px #ced4da;
+  box-shadow: inset 1px 1px 2px #ced4da;
 }
 .startScreen {
   width: 100%;

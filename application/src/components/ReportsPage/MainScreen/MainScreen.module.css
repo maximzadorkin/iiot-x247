@@ -3,7 +3,7 @@
   width: 100%;
 }
 .mainBlock {
-  max-height: 320px;
+  max-height: 400px;
   width: 100%;
   overflow: auto;
   display: flex;

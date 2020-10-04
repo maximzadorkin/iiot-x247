@@ -9,9 +9,12 @@
   justify-content: space-between;
   width: 90px;
 }
+.icon {
+  font-family: ElegantIcons;
+}
 .btn {
   padding: 0 5px 0 5px;
-  font-family: ElegantIcons;
+  font-weight: 300;
   font-size: 30px;
   outline: none;
   border-radius: 5px;
@@ -24,13 +27,11 @@
   opacity: 0.9;
   box-shadow: inset 0.5px 1px 1px #ced4da;
 }
-/* ////////// */
-.btn.green {
-  color: #f8f9fa;
-  background-color:  #00be52;
-}
-.text.red {
+.textRed {
   color: #ff3425;
+}
+.text {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 
 @media (max-width: 768px) {

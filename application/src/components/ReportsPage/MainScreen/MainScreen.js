@@ -68,7 +68,7 @@ class MainScreen extends React.Component {
       item.isSearch
       ? (
         <SearchWithSelection
-          heightSearchesUl={'200px'}
+          heightSearchesUl={'300px'}
           canClose={true}
           Close={() => this.closeSearch(item)}
           title={item.title}
@@ -93,6 +93,7 @@ class MainScreen extends React.Component {
     return (
       <div className={customClasses.mainScreen}>
         <QuizHeader
+          showNext={true}
           btnToStartHandle={this.props.btnToStartHandle}
           btnBackHandle={this.props.btnBackHandle}
           btnNextHandle={() => this.props.btnNextHandle('specification_screen')}

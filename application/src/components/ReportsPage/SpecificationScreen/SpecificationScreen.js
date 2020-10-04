@@ -76,7 +76,7 @@ class SpecificationScreen extends React.Component {
     step.isSearch
       ? (
         <SearchWithSelection
-          heightSearchesUl={'150px'}
+          heightSearchesUl={'100px'}
           canClose={true}
           Close={this.closeSearch}
           title={step.title}
@@ -101,46 +101,51 @@ class SpecificationScreen extends React.Component {
     return (
       <div className={customClasses.screen}>
         <QuizHeader
+          showNext={true}
           btnToStartHandle={this.props.btnToStartHandle}
           btnBackHandle={this.props.btnBackHandle}
           btnNextHandle={() => this.props.btnNextHandle('next_screen')}
         />
         <div className={customClasses.mainBlock}>
-            <div className={customClasses.steps}>{this.getSteps()}</div>
-            {
-              // this.areAllNotFill()
-              // ? null
-              // : (
-                <button
-                  className={`${customClasses.btn}`}
-                  onClick={this.addItem}
-                >
-                  &#x4c;
-                </button>
-              // )
-            }
+            <div className={customClasses.stepsBlock}>
+              {this.getSteps()}
+              {
+                // this.areAllNotFill()
+                // ? null
+                // : (
+                  <button
+                    className={`${customClasses.btn}`}
+                    onClick={this.addItem}
+                  >
+                    &#x4c;
+                  </button>
+                // )
+              }
+            </div>
             {/* {} проверка, что все заполнены. если заполнены - кнопка добавления */}
-            <ul className={customClasses.itemsUl}>
-                {
-                  this.props.items.map(item =>
-                  <li className={customClasses.itemLi}>
-                    {item}
-                    <button
-                      className={customClasses.closeBtn}
-                      onClick={() => this.deleteItem(item)}
-                    >
-                      &#x4d;
-                    </button>
-                  </li>
-                  )
-                }
-            </ul>
-            <button
-              className={`${customClasses.btn} ${customClasses.red}`}
-              onClick={this.deleteAllItem}
-            >
-              Удалить все
-            </button>
+            <div className={customClasses.itemsBlock}>
+              <ul className={customClasses.itemsUl}>
+                  {
+                    this.props.items.map(item =>
+                    <li className={customClasses.itemLi}>
+                      {item}
+                      <button
+                        className={customClasses.closeBtn}
+                        onClick={() => this.deleteItem(item)}
+                      >
+                        &#x4d;
+                      </button>
+                    </li>
+                    )
+                  }
+              </ul>
+              <button
+                className={`${customClasses.btn} ${customClasses.red}`}
+                onClick={this.deleteAllItem}
+              >
+                Удалить все
+              </button>
+            </div>
         </div>
       </div>
     );
