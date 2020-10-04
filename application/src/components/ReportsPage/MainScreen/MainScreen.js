@@ -20,7 +20,7 @@ class MainScreen extends React.Component {
         getActiveValue: this.props.getActiveType,
         setActiveValue: this.props.setActiveType,
         getSearches: this.props.getSearches,
-        search: this.props.search(this.props.getActiveType(), 'types')
+        search: () => this.props.search(this.props.getActiveType(), 'types')
       },
       {
         title: 'Выбрать категорию',
