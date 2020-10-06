@@ -10,19 +10,18 @@ class SpecificationScreen extends React.Component {
     steps: []
   }
 
-  componentDidMount = () => {
-    this.setState({
+  componentDidMount = () => this.setState({
       steps: this.props.getLabels().map(item => ({
         isSearch: false,
         title: item,
         item: ''
       }))
     });
+
+  addItem = () => {
+    const addedItem = this.state.steps.map(step => step.item).join(', ');
+    this.props.setSpecification([...this.props.getItems(), addedItem])
   }
-
-  componentWillUnmount = () => {}
-
-  addItem = (value) => this.props.setSpecification([...this.props.getItems(), value])
 
   deleteItem = (value) => this.props
     .setSpecification(this.props.getItems().filter(item => item !== value))
@@ -42,17 +41,10 @@ class SpecificationScreen extends React.Component {
   isSomeOneActiveSearch = () => this.state.steps.reduce(
     (acc, step) => step.isSearch + acc, false)
 
-  areAllNotFill = () => {
-    console.log(this.state.steps)
-    // console.log(this.state.steps ? this.state.steps[0].item !== '' : null)
-    console.log(this.state.steps.reduce(
-      (acc, step) => step.item !== '' + acc, false))
-    return this.state.steps.reduce(
-    (acc, step) => step.item !== '' + acc, false)
-  }
+  areAllFill = () => this.state.steps
+    .reduce((acc, step) => step.item.length !== 0 * acc, true)
 
-  openSearch = (stepLink) => {
-    this.setState({
+  openSearch = (stepLink) => this.setState({
       steps: [
         ...this.state.steps
           .map(step =>
@@ -61,16 +53,13 @@ class SpecificationScreen extends React.Component {
             : {...step, isSearch: false})
       ]
     });
-  }
 
-  closeSearch = () => {
-    this.setState({
+  closeSearch = () => this.setState({
       steps: [
         ...this.state.steps
           .map(step => ({...step, isSearch: false}))
       ]
     });
-  }
 
   getSteps = () => this.state.steps.map(step =>
     step.isSearch
@@ -104,30 +93,29 @@ class SpecificationScreen extends React.Component {
           showNext={true}
           btnToStartHandle={this.props.btnToStartHandle}
           btnBackHandle={this.props.btnBackHandle}
-          btnNextHandle={() => this.props.btnNextHandle('next_screen')}
+          btnNextHandle={this.props.btnNextHandle}
         />
         <div className={customClasses.mainBlock}>
             <div className={customClasses.stepsBlock}>
               {this.getSteps()}
               {
-                // this.areAllNotFill()
-                // ? null
-                // : (
+                this.areAllFill()
+                ? (
                   <button
                     className={`${customClasses.btn}`}
                     onClick={this.addItem}
                   >
                     &#x4c;
                   </button>
-                // )
+                )
+                : null
               }
             </div>
-            {/* {} проверка, что все заполнены. если заполнены - кнопка добавления */}
             <div className={customClasses.itemsBlock}>
               <ul className={customClasses.itemsUl}>
                   {
                     this.props.items.map(item =>
-                    <li className={customClasses.itemLi}>
+                    <li className={customClasses.itemLi} key={Keys.getRandomKey()}>
                       {item}
                       <button
                         className={customClasses.closeBtn}

@@ -9,7 +9,7 @@
   border: 1px solid #ced4da;
   border-radius: 5px;
   background-color: #f7f7f7;
-  box-shadow: 0px 0px 20px #ced4da;
+  /* box-shadow: 0px 0px 20px #ced4da; */
 }
 .btn {
   padding: 10px;

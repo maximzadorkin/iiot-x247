@@ -12,33 +12,19 @@ import customClasses from './SearchWithSelection.module.css';
 // key={Keys.getRandomKey()}
 class SearchWithSelection extends React.Component {
 
-  changeValueHandle = (value) => {
-    this.props.setActiveValue(value);
-    this.props.search();
-  }
-
-  // componentDidMount =() => this.props.search();
-
-  getCloseButton = () => (
-    this.props.canClose
-    ?
-    <button className={customClasses.closeBtn}>
-      &#x42;
-    </button>
+  getCloseButton = () => this.props.canClose
+    ? (<button className={customClasses.closeBtn}>&#x42;</button>)
     : null
-  )
 
-  getActiveSearches = () => (
-    this.props.getSearches().map(item => (
+  getActiveSearches = () => this.props.getSearches().map(item => (
       <li
         className={customClasses.searchLi}
-        onClick={(event) => this.changeValueHandle(event.target.textContent)}
+        onClick={(event) => this.props.setActiveValue(event.target.textContent)}
         key={Keys.getRandomKey()}
       >
         {item}
       </li>
     ))
-  );
 
   render() {
     return (
@@ -55,11 +41,10 @@ class SearchWithSelection extends React.Component {
         <input
           type="text"
           className={customClasses.searchInput}
-          onChange={(event) => this.changeValueHandle(event.target.value)}
+          onChange={(event) => this.props.setActiveValue(event.target.value)}
           value={this.props.getActiveValue()}
           autoFocus
         />
-
         <ul
           className={customClasses.searchUl}
           style={{height: this.props.heightSearchesUl}}

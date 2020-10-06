@@ -4,12 +4,6 @@ import QuizHeader from '../QuizHeader/QuizHeader.js';
 import SearchWithSelection from '../../SearchWithSelection/SearchWithSelection.js';
 import customClasses from './MainScreen.module.css';
 
-// setActiveType
-// getActiveType
-// setActiveCategory
-// getActiveCategory
-// getSearches
-
 class MainScreen extends React.Component {
   
   state = {
@@ -20,7 +14,7 @@ class MainScreen extends React.Component {
         getActiveValue: this.props.getActiveType,
         setActiveValue: this.props.setActiveType,
         getSearches: this.props.getSearches,
-        search: () => this.props.search(this.props.getActiveType(), 'types')
+        search: this.props.search.bind(this, this.props.getActiveType(), 'types')
       },
       {
         title: 'Выбрать категорию',
@@ -28,7 +22,7 @@ class MainScreen extends React.Component {
         getActiveValue: this.props.getActiveCategory,
         setActiveValue: this.props.setActiveCategory,
         getSearches: this.props.getSearches,
-        search: () => this.props.search(this.props.getActiveCategory(), 'categories')
+        search: this.props.search.bind(this, this.props.getActiveCategory(), 'categories')
       }
     ]
   }
@@ -39,31 +33,30 @@ class MainScreen extends React.Component {
   arePreFilled = (beforeIndex) => this.state.elements.reduce(
     (acc, item, index) =>
       index < beforeIndex
-      ? acc * (item.getActiveValue() !== '')
+      ? acc * (item.getActiveValue().trim() !== '')
       : acc,
     true
   )
 
-  openSearch = (item) => {
-    this.setState({
+  openSearch = (item) => this.setState(prevValue => {
+    item.search();
+    return {
       elements: [
-        ...this.state.elements
-          .map(el =>
-            el.title === item.title
-            ? {...el, isSearch: true}
-            : {...el, isSearch: false})
+      ...prevValue.elements
+        .map(el =>
+          el.title === item.title
+          ? {...el, isSearch: true}
+          : {...el, isSearch: false})
       ]
-    });
-  }
+    }
+  })
 
-  closeSearch = (item) => {
-    this.setState({
+  closeSearch = () => this.setState(prevValue => ({
       elements: [
-        ...this.state.elements
+        ...prevValue.elements
           .map(el => ({...el, isSearch: false}))
       ]
-    });
-  }
+    }))
 
   getSteps = () => this.state.elements.map((item, index) =>
     !this.arePreFilled(index) ? null :
@@ -72,7 +65,7 @@ class MainScreen extends React.Component {
         <SearchWithSelection
           heightSearchesUl={'300px'}
           canClose={true}
-          Close={() => this.closeSearch(item)}
+          Close={this.closeSearch.bind(this, item)}
           title={item.title}
           setActiveValue={item.setActiveValue}
           getActiveValue={item.getActiveValue}
@@ -84,10 +77,10 @@ class MainScreen extends React.Component {
       : this.isSomeOneActiveSearch() ? null : (
         <button
           className={customClasses.openSearchBtn}
-          onClick={() => this.openSearch(item)}
+          onClick={this.openSearch.bind(this, item)}
           key={Keys.getRandomKey()}
         >
-            {`${item.title} (${item.getActiveValue()})`}
+            {`${item.title} [${item.getActiveValue()}]`}
         </button>
       )
   )
@@ -99,7 +92,7 @@ class MainScreen extends React.Component {
           showNext={true}
           btnToStartHandle={this.props.btnToStartHandle}
           btnBackHandle={this.props.btnBackHandle}
-          btnNextHandle={() => this.props.btnNextHandle('specification_screen')}
+          btnNextHandle={this.props.btnNextHandle}
         />
         <div className={customClasses.mainBlock}>
           {this.getSteps()}

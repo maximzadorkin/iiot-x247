@@ -5,8 +5,7 @@ import StartScreen from './StartScreen/StartScreen.js';
 import FavoritesScreen from './FavoritesScreen/FavoritesScreen.js';
 import MainScreen from './MainScreen/MainScreen.js';
 import SpecificationScreen from './SpecificationScreen/SpecificationScreen.js';
-import TimesScreen from './TimesScreen/TimesScreen.js';
-import Keys from '../../Functions/Keys.js';
+import DatesScreen from './DatesScreen/DatesScreen.js';
 import Report from './Report/Report.js';
 
 class Quiz extends React.Component {
@@ -18,13 +17,13 @@ class Quiz extends React.Component {
 
     activeType: '',
     activeCategory: '',
-    activeTimePeriod: {from: null, to: null},
-    searches: ['search1', 'search2', 'search3'],
+    activeTimePeriod: {from: '', to: ''}, // по умолчанию сегодняшний день
+    searches: [],
 
     specification: {
       activeIndex: 0,
       content: [
-        // {labels: ['Выбрать область', 'Выбрать город', 'Выбрать микрорайон'], items: []},
+        {labels: ['Выбрать область', 'Выбрать город', 'Выбрать микрорайон'], items: []},
         // {labels: ['Выбрать компанию', 'Выбрать чтото еще',], items: []}
       ]
     },
@@ -35,21 +34,26 @@ class Quiz extends React.Component {
     }
   }
 
-  setActiveType = (value) => this.setState(prevValue => ({
+  setActiveType = (value) => {
+    this.search(value, 'types');
+    this.setState(prevValue => ({
     ...prevValue,
       activeType: value,
       activeCategory: '',
-      // specification: {activeIndex: 0, content: []},
+      specification: {activeIndex: 0, content: []},
       activeTimePeriods: []
     }))
-  setActiveCategory = (value) => this.setState(prevValue => ({
-    ...prevValue,
-    activeCategory: value,
-    // specification: {activeIndex: 0, content: []},
-    activeTimePeriods: []
-  }))
-  setSpecificationItems = (value) => {
+  }
+  setActiveCategory = (value) => {
+    this.search(value, 'categories');
     this.setState(prevValue => ({
+      ...prevValue,
+      activeCategory: value,
+      specification: {activeIndex: 0, content: []},
+      activeTimePeriods: []
+    }))
+  }
+  setSpecificationItems = (value) => this.setState(prevValue => ({
     ...prevValue,
     specification: {
       ...prevValue.specification,
@@ -60,7 +64,6 @@ class Quiz extends React.Component {
       )
     }
   }))
-  }
   setActiveDatePeriod = (value) => this.setState({activeTimePeriod: value})
 
   getActiveType = () => this.state.activeType
@@ -71,89 +74,137 @@ class Quiz extends React.Component {
   getSearches = () => this.state.searches
 
   search = (value, sought) => {
+    console.log('search')
     switch (sought) {
       case 'types':
         axios.get(`https://localhost:5001/api/EDSChart/?type=${value}`)
-        .then(response => {
-          console.log(response)
-          this.setState({searches: response.data})
-        });
+          .then(response => this.setState({searches: response.data}));
         break;
       case 'categories':
         axios.get(`https://localhost:5001/api/EDSChart/?type=${this.state.activeType}&category=${value}&method=1`)
-        .then(response => {
-          console.log(response)
-          this.setState({searches: response.data})
-        });
+          .then(response => this.setState({searches: response.data}));
         break;
-      // case 'times_screen':
-        // axios.
-        // break;
+      case 'specification':
+        break;
       default:
         break;
     }
+    this.setState({searches: ['По данному запросу ничего не найдено']})
   }
 
-  changeScreen = (newScreen) => {
+  //TODO: починить взаимодействие на нескольких спецификаторах
+  changeScreen = (newScreen = null) => {
+    const setScreen = (screen) => this.setState({activeScreen: screen});
+    const setNextScreen = (screen, lastScreen) => this.setState(prevValue => ({
+      ...prevValue,
+      searches: [],
+      activeScreen: screen,
+      screensSequence: [...prevValue.screensSequence, lastScreen]
+    })); 
+
     const activeScreen = this.state.activeScreen;
-    let canChange = true;
+    let canChange;
 
     this.setState({activeScreen: 'load_screen'});
 
     switch (activeScreen) {
+      case 'start_screen':
+        setNextScreen(newScreen, 'start_screen');
+        break;
       case 'main_screen':
-        if (this.state.activeCategory === '')
-          canChange = false;
-        else if (!this.state.specification.content[0])
-          newScreen = 'times_screen';
+        canChange = this.getActiveType() && this.getActiveCategory();
+        const isSpecificationEmpty = this.state.specification.content.length === 0;
+        if (canChange && isSpecificationEmpty)
+          axios.get(`/localhost:5001`)
+          .then(response => {
+            const data = response.data;
+            if (data.length !== 0) {
+              this.setState({specification: {
+                activeIndex: 0,
+                content: data
+              }})
+              setNextScreen('specification_screen', 'main_screen')
+            } else
+              setNextScreen('dates_screen', 'main_screen')
+          })
+          .catch(err => {
+            const data = [
+              {labels: ['Выбрать область', 'Выбрать город', 'Выбрать микрорайон'], items: []},
+              // {labels: ['Выбрать компанию', 'Выбрать чтото еще',], items: []}
+            ];
+            if (data.length !== 0) {
+              this.setState({specification: {
+                activeIndex: 0,
+                content: data
+              }})
+              setNextScreen('specification_screen', 'main_screen')
+            } else
+              setNextScreen('dates_screen', 'main_screen')
+          });
+        else if (canChange)
+          setNextScreen('specification_screen', 'main_screen');
+        else
+          setScreen('main_screen');
         break;
       case 'specification_screen':
+        const activeSpecification = this.state.specification.activeIndex + 1;
         const specificationContent = this.state.specification.content;
-        const activeSpecification = this.state.specification.activeIndex;
-        if (specificationContent) {
-          if (specificationContent[activeSpecification] === [])
-            canChange = false;
-          else if (!specificationContent[activeSpecification + 1])
-            newScreen = 'times_screen';
+        console.log(specificationContent)
+        if (specificationContent[activeSpecification]) {
+          setNextScreen('specification_screen', 'specification_screen');
+          this.setState({specification: {
+            activeIndex: activeSpecification,
+            content: specificationContent
+          }});
         } else {
-          newScreen = 'times_screen';
+          setNextScreen('dates_screen', 'specification_screen');
         }
         break;
-      case 'times_screen':
-        canChange = Boolean(this.state.activeTimePeriod.from && this.state.activeTimePeriod.to);
-        axios.post('https://localhost:5001/api/EDSChart/', {
-          type: this.state.activeType,
-          category: this.state.activeCategory,
-          from: this.state.activeTimePeriod.from,
-          to: this.state.activeTimePeriod.to
-        }).then(response => {
-          if (canChange) {
+      case 'dates_screen':
+        const haveDatePeriod = this.state.activeTimePeriod.from && this.state.activeTimePeriod.to;
+        if (haveDatePeriod) {
+          axios.post('https://localhost:5001/api/EDSChart/', {
+            type: this.state.activeType,
+            category: this.state.activeCategory,
+            from: this.state.activeTimePeriod.from,
+            to: this.state.activeTimePeriod.to
+          }).then(response => this.setState(prevValue => ({
+            ...prevValue,
+            report: {...prevValue.report, content: response.data},
+            searches: [],
+            activeScreen: 'report_screen',
+            screensSequence: [...prevValue.screensSequence, activeScreen]
+          })))
+          .catch(err => {
+            const data = [['sdg', 'sfg'], ['sd', 'sdf']]
             this.setState(prevValue => ({
               ...prevValue,
-              report: {
-                ...this.state.report,
-                content: response.data
-              },
+              report: {...prevValue.report, content: data},
               searches: [],
-              activeScreen: newScreen,
+              activeScreen: 'report_screen',
               screensSequence: [...prevValue.screensSequence, activeScreen]
             }))
-          }
-        });
+          });
+        } else {
+          setScreen('dates_screen')
+        }
         break;
       default:
-        canChange = true;
+        console.log('The desired window does not exist. Redirected to start screen');
+        this.btnToStartHandle();
+        break;
     }
-    if (canChange && activeScreen !== 'times_screen')
-      this.setState(prevValue => ({
-        ...prevValue,
-        searches: [],
-        activeScreen: newScreen,
-        screensSequence: [...prevValue.screensSequence, activeScreen]
-      }));
-    else
-      this.setState({activeScreen: activeScreen});
   }
+
+  btnToStartHandle = () => this.setState(prevValue => ({
+    ...prevValue,
+    activeScreen: 'start_screen',
+    screensSequence: []
+  }));
+
+  //TODO: адаптировать для нескольких specification
+  btnBackHandle = () =>
+    this.setState({activeScreen: this.state.screensSequence.pop()});
 
   returnScreen = (screen) => {
     let nextScreen;
@@ -205,12 +256,12 @@ class Quiz extends React.Component {
           />
         );
         break;
-      case 'times_screen':
+      case 'dates_screen':
         nextScreen =  (
-          <TimesScreen 
+          <DatesScreen 
             btnToStartHandle={this.btnToStartHandle}
             btnBackHandle={this.btnBackHandle}
-            btnNextHandle={() => this.changeScreen('report_screen')}
+            btnNextHandle={this.changeScreen}
             getDatePeriod={this.getActiveDatePeriod}
             setDatePeriod={this.setActiveDatePeriod}
           />
@@ -225,26 +276,12 @@ class Quiz extends React.Component {
           />
         );
         break;
-      case 'load_screen':
-        const load = <p className={customClasses.load}>&#xe02d;</p>;
-        nextScreen = load;
       default:
-        const loadS = <p className={customClasses.load}>&#xe02d;</p>;
-        nextScreen = loadS;
+        nextScreen = <p className={customClasses.load}>&#xe02d;</p>;
         break;
     }
     return nextScreen;
   }
-
-  btnToStartHandle = () => this.setState(prevValue => ({
-      ...prevValue,
-      activeScreen: 'start_screen',
-      screensSequence: []
-    }));
-
-
-  btnBackHandle = () =>
-    this.setState({activeScreen: this.state.screensSequence.pop()});
 
   render() {
     return (
