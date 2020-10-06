@@ -89,7 +89,7 @@ class Quiz extends React.Component {
       default:
         break;
     }
-    this.setState({searches: ['По данному запросу ничего не найдено']})
+    // this.setState({searches: ['По данному запросу ничего не найдено']})
   }
 
   //TODO: починить взаимодействие на нескольких спецификаторах
