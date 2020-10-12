@@ -37,14 +37,15 @@ class Report extends React.Component {
             <option defaultValue className={customClasses.pane}>Характеристики</option>
             <option defaultValue className={customClasses.pane}>Слои</option>
           </select>
-          <a 
-            href={`${this.props.report.link}`} 
+          <a
+            href='#'
             className={customClasses.download}
-            onClick = {
-              () => {axios.post(`сюда заебашить `, this.props.report.post) }
-            }
-            download
-            // target='_blank'
+            onClick = { () => {
+                axios.post(`сюда заебашить `, this.props.report.post).then(response => {
+                  evt.preventDefault();
+                  window.open(response.data, '_blank');
+                }) 
+            }}
           >
             <small style={{fontFamily: 'ElegantIcons', fontSize: '15px'}}>&#xe092;</small> 
           </a>
