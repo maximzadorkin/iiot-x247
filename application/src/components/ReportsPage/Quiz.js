@@ -149,7 +149,7 @@ class Quiz extends React.Component {
             to: this.state.activeTimePeriod.to
           }).then(response => this.setState(prevValue => ({
             report: {
-              ...prevValue.report, link: response.data.link, content: response.data.table,
+              ...prevValue.report, content: response.data,
               post: {
                 type: this.state.activeType,
                 category: this.state.activeCategory,

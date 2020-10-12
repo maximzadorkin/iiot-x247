@@ -40,12 +40,9 @@ class Report extends React.Component {
           <a
             href='#'
             className={customClasses.download}
-            onClick = { () => {
-                axios.post(`сюда заебашить `, this.props.report.post).then(response => {
-                  evt.preventDefault();
-                  window.open(response.data, '_blank');
-                }) 
-            }}
+            onClick = { () => axios.post(`сюда заебашить `, this.props.report.post)
+              .then(response => window.open(response.data, '_blank')) 
+            }
           >
             <small style={{fontFamily: 'ElegantIcons', fontSize: '15px'}}>&#xe092;</small> 
           </a>
