@@ -1,5 +1,4 @@
 import React from 'react';
-import customClasses from './Quiz.module.css';
 import axios from 'axios';
 import StartScreen from './StartScreen/StartScreen.js';
 import FavoritesScreen from './FavoritesScreen/FavoritesScreen.js';
@@ -7,11 +6,11 @@ import MainScreen from './MainScreen/MainScreen.js';
 import SpecificationScreen from './SpecificationScreen/SpecificationScreen.js';
 import DatesScreen from './DatesScreen/DatesScreen.js';
 import Report from './Report/Report.js';
+import css from './Quiz.module.css';
 
 class Quiz extends React.Component {
 
   state = {
-
     activeScreen: 'start_screen',
     screensSequence: [],
 
@@ -22,37 +21,29 @@ class Quiz extends React.Component {
 
     specification: {
       activeIndex: 0,
-      content: [
-        {labels: ['Выбрать область', 'Выбрать город', 'Выбрать микрорайон'], items: []},
-        // {labels: ['Выбрать компанию', 'Выбрать чтото еще',], items: []}
-      ]
+      content: [/* {labels: ['Выбрать область', 'Выбрать город', 'Выбрать микрорайон'], items: []} */]
     },
 
     report: {
       title: '',
-      content: []
+      link: '',
+      content: [],
     }
   }
 
-  setActiveType = (value) => {
-    this.search(value, 'types');
-    this.setState(prevValue => ({
+  setActiveType = (value) => this.setState(prevValue => ({
+  ...prevValue,
+    activeType: value,
+    activeCategory: '',
+    specification: {activeIndex: 0, content: []},
+    activeTimePeriods: []
+  }))
+  setActiveCategory = (value) => this.setState(prevValue => ({
     ...prevValue,
-      activeType: value,
-      activeCategory: '',
-      specification: {activeIndex: 0, content: []},
-      activeTimePeriods: []
-    }))
-  }
-  setActiveCategory = (value) => {
-    this.search(value, 'categories');
-    this.setState(prevValue => ({
-      ...prevValue,
-      activeCategory: value,
-      specification: {activeIndex: 0, content: []},
-      activeTimePeriods: []
-    }))
-  }
+    activeCategory: value,
+    specification: {activeIndex: 0, content: []},
+    activeTimePeriods: []
+  }))
   setSpecificationItems = (value) => this.setState(prevValue => ({
     ...prevValue,
     specification: {
@@ -73,23 +64,24 @@ class Quiz extends React.Component {
   getActiveDatePeriod = () => this.state.activeTimePeriod
   getSearches = () => this.state.searches
 
-  search = (value, sought) => {
-    console.log('search')
+  search = (valueForSearch, sought) => {
     switch (sought) {
       case 'types':
-        axios.get(`https://localhost:5001/api/EDSChart/?type=${value}`)
+        axios.get(`https://localhost:5001/api/EDSChart/?type=${valueForSearch}`)
           .then(response => this.setState({searches: response.data}));
         break;
       case 'categories':
-        axios.get(`https://localhost:5001/api/EDSChart/?type=${this.state.activeType}&category=${value}&method=1`)
+        axios.get(`https://localhost:5001/api/EDSChart/?type=${this.state.activeType}&category=${valueForSearch}&method=1`)
           .then(response => this.setState({searches: response.data}));
         break;
       case 'specification':
+        axios.get(`https://localhost:5001/api/EDSChart/specifications/?category=${this.state.activeCategory}&spec=${valueForSearch}`)
+        .then(response => this.setState({searches: response.data}));
         break;
       default:
+        this.setState({searches: []});
         break;
     }
-    // this.setState({searches: ['По данному запросу ничего не найдено']})
   }
 
   //TODO: починить взаимодействие на нескольких спецификаторах
@@ -115,31 +107,18 @@ class Quiz extends React.Component {
         canChange = this.getActiveType() && this.getActiveCategory();
         const isSpecificationEmpty = this.state.specification.content.length === 0;
         if (canChange && isSpecificationEmpty)
-          axios.get(`/localhost:5001`)
+          axios.get(`https://localhost:5001/api/EDSChart/?type=${this.getActiveType()}&category=${this.getActiveCategory()}&method=2`)
           .then(response => {
             const data = response.data;
-            if (data.length !== 0) {
-              this.setState({specification: {
+            const lengthData = data.length;
+            this.setState({
+              specification: {
                 activeIndex: 0,
-                content: data
-              }})
-              setNextScreen('specification_screen', 'main_screen')
-            } else
-              setNextScreen('dates_screen', 'main_screen')
-          })
-          .catch(err => {
-            const data = [
-              {labels: ['Выбрать область', 'Выбрать город', 'Выбрать микрорайон'], items: []},
-              // {labels: ['Выбрать компанию', 'Выбрать чтото еще',], items: []}
-            ];
-            if (data.length !== 0) {
-              this.setState({specification: {
-                activeIndex: 0,
-                content: data
-              }})
-              setNextScreen('specification_screen', 'main_screen')
-            } else
-              setNextScreen('dates_screen', 'main_screen')
+                content: [{labels: data, items: []}]
+              }
+            })
+            if (lengthData > 0) setNextScreen('specification_screen', 'main_screen')
+            else setNextScreen('dates_screen', 'main_screen');
           });
         else if (canChange)
           setNextScreen('specification_screen', 'main_screen');
@@ -149,7 +128,6 @@ class Quiz extends React.Component {
       case 'specification_screen':
         const activeSpecification = this.state.specification.activeIndex + 1;
         const specificationContent = this.state.specification.content;
-        console.log(specificationContent)
         if (specificationContent[activeSpecification]) {
           setNextScreen('specification_screen', 'specification_screen');
           this.setState({specification: {
@@ -166,25 +144,24 @@ class Quiz extends React.Component {
           axios.post('https://localhost:5001/api/EDSChart/', {
             type: this.state.activeType,
             category: this.state.activeCategory,
+            specification: this.state.specification.content[0].items.flat(),
             from: this.state.activeTimePeriod.from,
             to: this.state.activeTimePeriod.to
           }).then(response => this.setState(prevValue => ({
-            ...prevValue,
-            report: {...prevValue.report, content: response.data},
+            report: {
+              ...prevValue.report, link: response.data.link, content: response.data.table,
+              post: {
+                type: this.state.activeType,
+                category: this.state.activeCategory,
+                specification: this.state.specification.content[0].items.flat(),
+                from: this.state.activeTimePeriod.from,
+                to: this.state.activeTimePeriod.to
+              }
+            },
             searches: [],
             activeScreen: 'report_screen',
             screensSequence: [...prevValue.screensSequence, activeScreen]
           })))
-          .catch(err => {
-            const data = [['sdg', 'sfg'], ['sd', 'sdf']]
-            this.setState(prevValue => ({
-              ...prevValue,
-              report: {...prevValue.report, content: data},
-              searches: [],
-              activeScreen: 'report_screen',
-              screensSequence: [...prevValue.screensSequence, activeScreen]
-            }))
-          });
         } else {
           setScreen('dates_screen')
         }
@@ -249,7 +226,6 @@ class Quiz extends React.Component {
             btnNextHandle={this.changeScreen}
             getLabels={this.getSpecificationLabels}
             getItems={this.getSpecificationItems}
-            items={this.state.specification.content[this.state.specification.activeIndex].items}
             setSpecification={this.setSpecificationItems}
             getSearches={this.getSearches}
             search={this.search}
@@ -277,7 +253,7 @@ class Quiz extends React.Component {
         );
         break;
       default:
-        nextScreen = <p className={customClasses.load}>&#xe02d;</p>;
+        nextScreen = <p className={css.load}>&#xe02d;</p>;
         break;
     }
     return nextScreen;
@@ -285,7 +261,7 @@ class Quiz extends React.Component {
 
   render() {
     return (
-      <div className={customClasses.quiz}>
+      <div className={css.quiz}>
         {this.returnScreen(this.state.activeScreen)}
       </div>
     );

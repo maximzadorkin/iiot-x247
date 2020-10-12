@@ -2,6 +2,11 @@
   height: 100%;
   width: 100%;
 }
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 .tab {
   margin-bottom: 10px;
   padding: 5px;
@@ -39,4 +44,16 @@
   font-size: 15px;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-weight: 300;
+}
+.download {
+  width: 50px;
+  height: 25px;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 20px;
+  font-weight: 300;
+  outline: none;
+  border-radius: 5px;
+  color: #fcfcfc;
+  background-color: #34cc73;
+  text-align: center;
 }

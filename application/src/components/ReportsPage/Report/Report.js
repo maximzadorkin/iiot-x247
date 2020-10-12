@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import QuizHeader from '../QuizHeader/QuizHeader.js';
 import Keys from '../../../Functions/Keys.js';
 import customClasses from './Report.module.css';
@@ -30,11 +31,24 @@ class Report extends React.Component {
           btnToStartHandle={this.props.btnToStartHandle}
           btnBackHandle={this.props.btnBackHandle}
         />
-        <select className={customClasses.tab}>
-          <option defaultValue className={customClasses.pane}>Отчет</option>
-          <option defaultValue className={customClasses.pane}>Характеристики</option>
-          <option defaultValue className={customClasses.pane}>Слои</option>
-        </select>
+        <div className={customClasses.header}>
+          <select className={customClasses.tab}>
+            <option defaultValue className={customClasses.pane}>Отчет</option>
+            <option defaultValue className={customClasses.pane}>Характеристики</option>
+            <option defaultValue className={customClasses.pane}>Слои</option>
+          </select>
+          <a 
+            href={`${this.props.report.link}`} 
+            className={customClasses.download}
+            onClick = {
+              () => {axios.post(`сюда заебашить `, this.props.report.post) }
+            }
+            download
+            // target='_blank'
+          >
+            <small style={{fontFamily: 'ElegantIcons', fontSize: '15px'}}>&#xe092;</small> 
+          </a>
+        </div>
         <div className={customClasses.tableWrap}>
           {this.parseTable(this.props.report.content)}
         </div>

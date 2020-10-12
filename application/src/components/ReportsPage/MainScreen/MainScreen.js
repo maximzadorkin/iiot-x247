@@ -2,7 +2,7 @@ import React from 'react';
 import Keys from '../../../Functions/Keys.js';
 import QuizHeader from '../QuizHeader/QuizHeader.js';
 import SearchWithSelection from '../../SearchWithSelection/SearchWithSelection.js';
-import customClasses from './MainScreen.module.css';
+import css from './MainScreen.module.css';
 
 class MainScreen extends React.Component {
   
@@ -12,7 +12,10 @@ class MainScreen extends React.Component {
         title: 'Выбрать тип',
         isSearch: false,
         getActiveValue: this.props.getActiveType,
-        setActiveValue: this.props.setActiveType,
+        setActiveValue: (value) => {
+          this.props.search(value, 'types');
+          return this.props.setActiveType(value);
+        },
         getSearches: this.props.getSearches,
         search: this.props.search.bind(this, this.props.getActiveType(), 'types')
       },
@@ -20,7 +23,10 @@ class MainScreen extends React.Component {
         title: 'Выбрать категорию',
         isSearch: false,
         getActiveValue: this.props.getActiveCategory,
-        setActiveValue: this.props.setActiveCategory,
+        setActiveValue: (value) => {
+          this.props.search(value, 'categories');
+          return this.props.setActiveCategory(value);
+        },
         getSearches: this.props.getSearches,
         search: this.props.search.bind(this, this.props.getActiveCategory(), 'categories')
       }
@@ -63,38 +69,37 @@ class MainScreen extends React.Component {
       item.isSearch
       ? (
         <SearchWithSelection
-          heightSearchesUl={'300px'}
+          heightList={'300px'}
           canClose={true}
           Close={this.closeSearch.bind(this, item)}
           title={item.title}
-          setActiveValue={item.setActiveValue}
-          getActiveValue={item.getActiveValue}
-          getSearches={item.getSearches}
-          search={item.search}
+          onChangeHandler={item.setActiveValue}
+          getInputValue={item.getActiveValue}
+          getList={item.getSearches}
           key={Keys.getRandomKey()}
         />
       )
       : this.isSomeOneActiveSearch() ? null : (
         <button
-          className={customClasses.openSearchBtn}
+          className={css.openSearchBtn}
           onClick={this.openSearch.bind(this, item)}
           key={Keys.getRandomKey()}
         >
-            {`${item.title} [${item.getActiveValue()}]`}
+          <small style={{fontFamily: 'ElegantIcons', fontSize: '14px'}}>&#x55;</small> {`${item.title} [${item.getActiveValue()}]`}
         </button>
       )
   )
   
   render() {
     return (
-      <div className={customClasses.mainScreen}>
+      <div className={css.mainScreen}>
         <QuizHeader
           showNext={true}
           btnToStartHandle={this.props.btnToStartHandle}
           btnBackHandle={this.props.btnBackHandle}
           btnNextHandle={this.props.btnNextHandle}
         />
-        <div className={customClasses.mainBlock}>
+        <div className={css.mainBlock}>
           {this.getSteps()}
         </div>
       </div>

@@ -1,16 +1,16 @@
 import React from 'react';
-import customClasses from '../Quiz.module.css';
+import css from './StartScreen.module.css';
 
 export default (props) => (
-  <div className={customClasses.startScreen}>
+  <div className={css.startScreen}>
     <button
-      className={`${customClasses.btn} ${customClasses.light} ${customClasses.click}`}
+      className={`${css.btn} ${css.light} ${css.click}`}
       onClick={props.changeScreen.bind(this, 'main_screen')}
     >
       Создать отчет
     </button>
     <button
-      className={`${customClasses.btn} ${customClasses.yellow} ${customClasses.click}`}
+      className={`${css.btn} ${css.yellow} ${css.click}`}
       onClick={props.changeScreen.bind(this, 'favorites_screen')}
       disabled
     >

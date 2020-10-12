@@ -1,56 +1,59 @@
 import React from 'react';
 import Keys from '../../Functions/Keys.js';
-import customClasses from './SearchWithSelection.module.css';
+import css from './SearchWithSelection.module.css';
 
-// heightSearchesUl={'250px'}
-// canClose={true}
-// Close={() => this.closeSearch(item)}
-// title={item.title}
-// setActiveValue={item.setActiveValue}
-// getActiveValue={item.getActiveValue}
-// getSearches={item.getSearches}
-// key={Keys.getRandomKey()}
 class SearchWithSelection extends React.Component {
 
-  getCloseButton = () => this.props.canClose
-    ? (<button className={customClasses.closeBtn}>&#x42;</button>)
-    : null
+  getActiveList = () => this.props.getList().map(item => (
+    <li
+      className={css.listItem}
+      onClick={(event) => this.props.onChangeHandler(event.target.textContent)}
+      key={Keys.getRandomKey()}
+    >
+      {item}
+    </li>
+  ))
 
-  getActiveSearches = () => this.props.getSearches().map(item => (
-      <li
-        className={customClasses.searchLi}
-        onClick={(event) => this.props.setActiveValue(event.target.textContent)}
-        key={Keys.getRandomKey()}
-      >
-        {item}
-      </li>
-    ))
+  getHeader = () => (
+    <div
+      className={css.header}
+      onClick={this.props.Close}
+    >
+      <label className={css.label}>
+        {this.props.title}
+      </label>
+      {
+        this.props.canClose
+        ? <button className={css.closeBtn}>&#x42;</button>
+        : null
+      }
+    </div>
+  )
+
+  getList = () => (
+    <ul
+      className={css.list}
+      style={{height: this.props.heightList}}
+    >
+      {this.getActiveList()}
+    </ul>
+  )
 
   render() {
     return (
-      <div className={customClasses.container}>
-        <div
-          className={customClasses.searchHeader}
-          onClick={this.props.Close}
-        >
-          <label className={customClasses.searchLabel}>
-            {this.props.title}
-          </label>
-          {this.getCloseButton()}
-        </div>
+      <div className={css.container}>
+        {this.getHeader()}
+
         <input
           type="text"
-          className={customClasses.searchInput}
-          onChange={(event) => this.props.setActiveValue(event.target.value)}
-          value={this.props.getActiveValue()}
+          className={css.input}
+          onChange={(event) => this.props.onChangeHandler(event.target.value)}
+          value={this.props.getInputValue()}
+          //TODO: Сделать без автофокуса
           autoFocus
         />
-        <ul
-          className={customClasses.searchUl}
-          style={{height: this.props.heightSearchesUl}}
-        >
-          {this.getActiveSearches()}
-        </ul>
+
+        {this.getList()}
       </div>
     );
   }

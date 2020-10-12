@@ -1,17 +1,17 @@
 import React from 'react';
-import customClasses from './QuizHeader.module.css';
+import css from './QuizHeader.module.css';
 
 export default (props) => (
-  <div className={customClasses.quizHeader}>
-    <div className={customClasses.groupBtn}>
+  <div className={css.quizHeader}>
+    <div className={css.groupBtn}>
       <button
-        className={`${customClasses.btn} ${customClasses.textRed} ${customClasses.icon}`}
+        className={`${css.btn} ${css.textRed} ${css.icon}`}
         onClick={props.btnToStartHandle}
       >
         &#x38;
       </button>
       <button
-        className={`${customClasses.btn} ${customClasses.icon}`}
+        className={`${css.btn} ${css.icon}`}
         onClick={props.btnBackHandle}
       >
         &#x34;
@@ -21,7 +21,7 @@ export default (props) => (
       props.showNext
       ? (
         <button
-          className={`${customClasses.btn} ${customClasses.icon}`}
+          className={`${css.btn} ${css.icon}`}
           onClick={props.btnNextHandle}
         >
           &#x35;
@@ -29,13 +29,12 @@ export default (props) => (
       )
       : (
         <button
-          className={`${customClasses.btn} ${customClasses.icon} ${customClasses.textRed}`}
+          className={`${css.btn} ${css.icon} ${css.textRed}`}
           onClick={props.btnNextHandle}
         >
           &#x69;
         </button>
       )
     }
-    
   </div>
 );

@@ -3,18 +3,18 @@
   overflow: auto;
   margin-bottom: 15px;
 }
-.searchHeader {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 5px;
   cursor: pointer;
 }
-.searchHeader:active {
+.header:active {
   border-radius: 5px;
   box-shadow: 0px 0px 0px 1px #ced4da inset;
 }
-.searchLabel {
+.label {
   display: block;
   overflow: auto;
   height: 30px;
@@ -41,7 +41,7 @@
   opacity: 0.9;
   box-shadow: inset 1px 1px 2px #ced4da;
 }
-.searchInput {
+.input {
   width: 100%;
   padding: 5px;
   outline: none;
@@ -55,15 +55,15 @@
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-weight: 300;
 }
-.searchInput:focus {
+.input:focus {
   box-shadow: 0px 0px 0px 2px #ced4da inset;
 }
-.searchUl {
+.list {
   height: 250px;
   border: 1px solid #ced4da;
   overflow: auto;
 }
-.searchLi {
+.listItem {
   display: flex;
   justify-content: space-between;
   padding: 10px 10px 5px 10px;
@@ -72,7 +72,7 @@
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-weight: 300;
 }
-.searchLi:hover {
+.listItem:hover {
   cursor: pointer;
   color:#f8f9fa;
   background-color: #007bff;

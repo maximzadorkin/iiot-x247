@@ -2,11 +2,6 @@
 	box-sizing: border-box;
 }
 
-html {
-	background-color: #f8f9fa;
-	height: 100vh;
-}
-
 body {
   margin: 0;
   padding: 0;
