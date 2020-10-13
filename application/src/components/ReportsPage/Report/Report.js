@@ -24,6 +24,7 @@ class Report extends React.Component {
   }
 
   render() {
+    console.log(this.props.report.post)
     return (
       <div className={customClasses.screen}>
         <QuizHeader
@@ -40,9 +41,8 @@ class Report extends React.Component {
           <a
             href='#'
             className={customClasses.download}
-            onClick = { () => axios.post(`сюда заебашить `, this.props.report.post)
-              .then(response => window.open(response.data, '_blank')) 
-            }
+            onClick = { () => axios.post(`http://dev.dcorpse.keenetic.pro/api/EDSChart/jsonTest/?`, this.props.report.post)
+                .then(response => window.open(response.data, '_blank')) }
           >
             <small style={{fontFamily: 'ElegantIcons', fontSize: '15px'}}>&#xe092;</small> 
           </a>

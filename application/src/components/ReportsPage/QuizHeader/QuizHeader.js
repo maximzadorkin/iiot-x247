@@ -27,14 +27,7 @@ export default (props) => (
           &#x35;
         </button>
       )
-      : (
-        <button
-          className={`${css.btn} ${css.icon} ${css.textRed}`}
-          onClick={props.btnNextHandle}
-        >
-          &#x69;
-        </button>
-      )
+      : null
     }
   </div>
 );

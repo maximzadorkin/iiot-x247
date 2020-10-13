@@ -24,8 +24,12 @@ class SpecificationScreen extends React.Component {
 
   addItem = () => {
     const addedItem = this.state.steps.map(step => step.item);
-    if (!this.props.getItems().map(item => item.join('')).includes(addedItem.join('')))
+    if (!this.props.getItems().map(item => item.join('')).includes(addedItem.join(''))) {
       this.props.setSpecification([...this.props.getItems(), addedItem])
+      this.setState(prevValue => ({
+        steps: prevValue.steps.map(el => ({...el, isSearch: false, item: ''}))
+      }))
+    }
   }
 
   deleteItem = (itemForDelete, itemForDeleteIndex) => this.props
@@ -53,7 +57,6 @@ class SpecificationScreen extends React.Component {
     .reduce((acc, step) => step.item.length !== 0 * acc, true)
 
   openSearch = (stepLink) => this.setState(prevValue => {
-    console.log(stepLink)
     stepLink.search(stepLink.item);
     return {
       steps: [

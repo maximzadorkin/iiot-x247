@@ -67,15 +67,15 @@ class Quiz extends React.Component {
   search = (valueForSearch, sought) => {
     switch (sought) {
       case 'types':
-        axios.get(`https://localhost:5001/api/EDSChart/?type=${valueForSearch}`)
+        axios.get(`http://dcorpse.keenetic.pro/api/EDSChart/?type=${valueForSearch}`)
           .then(response => this.setState({searches: response.data}));
         break;
       case 'categories':
-        axios.get(`https://localhost:5001/api/EDSChart/?type=${this.state.activeType}&category=${valueForSearch}&method=1`)
+        axios.get(`http://dcorpse.keenetic.pro/api/EDSChart/?type=${this.state.activeType}&category=${valueForSearch}&method=1`)
           .then(response => this.setState({searches: response.data}));
         break;
       case 'specification':
-        axios.get(`https://localhost:5001/api/EDSChart/specifications/?category=${this.state.activeCategory}&spec=${valueForSearch}`)
+        axios.get(`http://dcorpse.keenetic.pro/api/EDSChart/specifications/?category=${this.state.activeCategory}&spec=${valueForSearch}`)
         .then(response => this.setState({searches: response.data}));
         break;
       default:
@@ -107,7 +107,7 @@ class Quiz extends React.Component {
         canChange = this.getActiveType() && this.getActiveCategory();
         const isSpecificationEmpty = this.state.specification.content.length === 0;
         if (canChange && isSpecificationEmpty)
-          axios.get(`https://localhost:5001/api/EDSChart/?type=${this.getActiveType()}&category=${this.getActiveCategory()}&method=2`)
+          axios.get(`http://dcorpse.keenetic.pro/api/EDSChart/?type=${this.getActiveType()}&category=${this.getActiveCategory()}&method=2`)
           .then(response => {
             const data = response.data;
             const lengthData = data.length;
@@ -141,7 +141,7 @@ class Quiz extends React.Component {
       case 'dates_screen':
         const haveDatePeriod = this.state.activeTimePeriod.from && this.state.activeTimePeriod.to;
         if (haveDatePeriod) {
-          axios.post('https://localhost:5001/api/EDSChart/', {
+          axios.post('http://dcorpse.keenetic.pro/api/EDSChart/', {
             type: this.state.activeType,
             category: this.state.activeCategory,
             specification: this.state.specification.content[0].items.flat(),
