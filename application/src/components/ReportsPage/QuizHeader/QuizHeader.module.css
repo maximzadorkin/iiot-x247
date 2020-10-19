@@ -21,6 +21,7 @@
   border: 1px solid #ced4da;
   transition: 0.2s;
   color: #6c757d;
+  background-color: #fcfcfc;
 }
 .btn:hover {
   cursor: pointer;

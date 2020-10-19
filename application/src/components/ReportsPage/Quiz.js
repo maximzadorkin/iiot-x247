@@ -167,7 +167,6 @@ class Quiz extends React.Component {
         }
         break;
       default:
-        console.log('The desired window does not exist. Redirected to start screen');
         this.btnToStartHandle();
         break;
     }
