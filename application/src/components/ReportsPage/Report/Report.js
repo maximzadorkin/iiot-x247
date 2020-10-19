@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import QuizHeader from '../QuizHeader/QuizHeader.js';
 import Keys from '../../../Functions/Keys.js';
-import customClasses from './Report.module.css';
+import FileDownload from '../../FileDownload/FileDownload.js';
+import css from './Report.module.css';
 
 class Report extends React.Component {
 
@@ -13,7 +14,7 @@ class Report extends React.Component {
       const lineContent = Object.values(content[i]);
       for (let j = 0; j < lineContent.length; j += 1) {
         const textOfCell = lineContent[j];
-        const cell = <td key={Keys.getRandomKey()} className={customClasses.cell}>{textOfCell}</td>;
+        const cell = <td key={Keys.getRandomKey()} className={css.cell}>{textOfCell}</td>;
         line.push(cell);
       }
       lines.push(<tr key={Keys.getRandomKey()}>{line}</tr>)
@@ -24,30 +25,30 @@ class Report extends React.Component {
   }
 
   render() {
-    console.log(this.props.report.post)
     return (
-      <div className={customClasses.screen}>
+      <div className={css.screen}>
         <QuizHeader
           showNext={false}
           btnToStartHandle={this.props.btnToStartHandle}
           btnBackHandle={this.props.btnBackHandle}
         />
-        <div className={customClasses.header}>
-          <select className={customClasses.tab}>
-            <option defaultValue className={customClasses.pane}>Отчет</option>
-            <option defaultValue className={customClasses.pane}>Характеристики</option>
-            <option defaultValue className={customClasses.pane}>Слои</option>
+        <div className={css.header}>
+          <select className={css.tab}>
+            <option defaultValue className={css.pane}>Отчет</option>
+            <option defaultValue className={css.pane}>Характеристики</option>
+            <option defaultValue className={css.pane}>Слои</option>
           </select>
-          <a
-            href='#'
-            className={customClasses.download}
-            onClick = { () => axios.post(`http://dev.dcorpse.keenetic.pro/api/EDSChart/jsonTest/?`, this.props.report.post)
-                .then(response => window.open(response.data, '_blank')) }
+          <button
+            className={css.download}
+            onClick = { 
+              () => axios.post(`http://dcorpse.keenetic.pro/api/EDSChart/file.xlsx/?`, this.props.report.post)
+                .then(response => FileDownload(response))
+            }
           >
             <small style={{fontFamily: 'ElegantIcons', fontSize: '15px'}}>&#xe092;</small> 
-          </a>
+          </button>
         </div>
-        <div className={customClasses.tableWrap}>
+        <div className={css.tableWrap}>
           {this.parseTable(this.props.report.content)}
         </div>
       </div>

@@ -6,9 +6,10 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 .tab {
-  margin-bottom: 10px;
   padding: 5px;
   outline: none;
   border: 1px solid #ced4da;
@@ -48,7 +49,7 @@
 }
 .download {
   width: 50px;
-  height: 25px;
+  border: none;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-size: 20px;
   font-weight: 300;
@@ -57,4 +58,5 @@
   color: #fcfcfc;
   background-color: #46a16c;
   text-align: center;
+  cursor: pointer;
 }
