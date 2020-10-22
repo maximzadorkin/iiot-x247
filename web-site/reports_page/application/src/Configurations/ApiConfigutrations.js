@@ -1,6 +1,6 @@
 export default {
   Report: {
-    typesFinder: '',
+    typesFinder: (typeSought),
     categoriesFinder: '',
     
   }
