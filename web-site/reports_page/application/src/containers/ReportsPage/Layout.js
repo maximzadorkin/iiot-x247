@@ -15,9 +15,9 @@ class Layout extends React.Component {
   render() {
     return (
       <div>
-        <SideContents 
+        {/* <SideContents 
           activePageTitle={'Отчеты'}
-        />
+        /> */}
         <Quiz />
       </div>
     );
