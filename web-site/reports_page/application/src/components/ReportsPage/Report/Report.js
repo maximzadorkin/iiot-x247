@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Api from '../../../Api'
 import QuizHeader from '../QuizHeader/QuizHeader.js';
 import Keys from '../../../Functions/Keys.js';
 import FileDownload from '../../FileDownload/FileDownload.js';
@@ -41,7 +42,7 @@ class Report extends React.Component {
           <button
             className={css.download}
             onClick = { 
-              () => axios.post(`http://dcorpse.keenetic.pro/api/EDSChart/file.xlsx/?`, this.props.report.post)
+              () => axios.post(`${Api.getLink()}/api/EDSChart/file.xlsx/?`, this.props.report.post)
                 .then(response => FileDownload(response))
             }
           >
